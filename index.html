@@ -233,6 +233,150 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/01/svn-command/" itemprop="url">
+                  Svn Command
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-01T15:16:10+08:00" content="2016-06-01">
+              2016-06-01
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>checkout</p>
+<blockquote>
+<p>svn checkout url</p>
+</blockquote>
+<p>提交 </p>
+<blockquote>
+<p>svn commit -m “message”</p>
+</blockquote>
+<p>更新</p>
+<blockquote>
+<p>svn update</p>
+</blockquote>
+<p>加入版本控制<br>添加目录下的所有文件，包括忽视的文件</p>
+<blockquote>
+<p>svn add .<br>添加目录下的未受控制的文件<br>svn add * —force</p>
+</blockquote>
+<p>查看svn远程信息</p>
+<blockquote>
+<p>svn info<br>查看svn远程URL<br>svn info | grep ‘URL’<br>svn info | grep -i ‘url’ (-i 忽略大小写)</p>
+</blockquote>
+<p>删除文件、目录</p>
+<blockquote>
+<p>svn del filename</p>
+</blockquote>
+<p>添加忽视<br>样例目录结构</p>
+<blockquote>
+<p>\project<br>    \source<br>    \cache<br>    \other</p>
+</blockquote>
+<p>执行st命令</p>
+<blockquote>
+<p>svn st</p>
+<p>M  source</p>
+<p>?  cache</p>
+</blockquote>
+<p>为受版本控制的可以直接加入忽视，已受版本控制的先删除并提交svn server，再添加忽视<br>忽略cache，where svn:ignore is the name of the property you’re setting, cache is the value of the property, and . is the directory you’re setting this property on. It should be the parent directory of the cachedirectory that needs the property.<br>以下命令只能添加一个，再使用此命令会覆盖之前，之前添加忽视的将被移除</p>
+<blockquote>
+<p>svn propset svn:ignore cache .</p>
+</blockquote>
+<p>查看哪些属性被设置了</p>
+<blockquote>
+<p>svn proplist</p>
+<p>Properties on ‘.’:<br>svn:ignore</p>
+</blockquote>
+<p>查看svn:ignore的属性值</p>
+<blockquote>
+<p>svn propget svn:ignore<br>cache</p>
+</blockquote>
+<p>删除设置的属性值</p>
+<blockquote>
+<p>svn propdel svn:ignore</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/01/hello-world/" itemprop="url">
                   Hello World
                 </a>
@@ -355,13 +499,20 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
