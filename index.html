@@ -277,58 +277,42 @@
       
         
           
-            <p>checkout</p>
-<blockquote>
-<p>svn checkout url</p>
-</blockquote>
-<p>提交 </p>
-<blockquote>
-<p>svn commit -m “message”</p>
-</blockquote>
-<p>更新</p>
-<blockquote>
-<p>svn update</p>
-</blockquote>
-<p>加入版本控制<br>添加目录下的所有文件，包括忽视的文件</p>
-<blockquote>
-<p>svn add .<br>添加目录下的未受控制的文件<br>svn add * —force</p>
-</blockquote>
-<p>查看svn远程信息</p>
-<blockquote>
-<p>svn info<br>查看svn远程URL<br>svn info | grep ‘URL’<br>svn info | grep -i ‘url’ (-i 忽略大小写)</p>
-</blockquote>
-<p>删除文件、目录</p>
-<blockquote>
-<p>svn del filename</p>
-</blockquote>
-<p>添加忽视<br>样例目录结构</p>
-<blockquote>
-<p>\project<br>    \source<br>    \cache<br>    \other</p>
-</blockquote>
-<p>执行st命令</p>
-<blockquote>
-<p>svn st</p>
-<p>M  source</p>
-<p>?  cache</p>
-</blockquote>
-<p>为受版本控制的可以直接加入忽视，已受版本控制的先删除并提交svn server，再添加忽视<br>忽略cache，where svn:ignore is the name of the property you’re setting, cache is the value of the property, and . is the directory you’re setting this property on. It should be the parent directory of the cachedirectory that needs the property.<br>以下命令只能添加一个，再使用此命令会覆盖之前，之前添加忽视的将被移除</p>
-<blockquote>
-<p>svn propset svn:ignore cache .</p>
-</blockquote>
+            <h1 id="Checkout"><a href="#Checkout" class="headerlink" title="Checkout"></a>Checkout</h1><pre><code>svn checkout url
+</code></pre><h1 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h1><pre><code>svn commit -m &quot;message&quot;
+</code></pre><h1 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h1><pre><code>svn update
+</code></pre><h1 id="Add"><a href="#Add" class="headerlink" title="Add"></a>Add</h1><p>添加目录下的所有文件，包括忽视的文件</p>
+<pre><code>svn add .
+</code></pre><p>添加目录下的未受控制的文件</p>
+<pre><code>svn add * —force
+</code></pre><h1 id="Info"><a href="#Info" class="headerlink" title="Info"></a>Info</h1><p>查看svn远程信息 </p>
+<pre><code>svn info
+</code></pre><p>查看svn远程URL</p>
+<pre><code>svn info | grep &apos;URL&apos;  
+svn info | grep -i &apos;url&apos; (-i 忽略大小写)
+</code></pre><h1 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h1><p>删除文件、目录</p>
+<pre><code>svn del filename
+</code></pre><h1 id="Ignore"><a href="#Ignore" class="headerlink" title="Ignore"></a>Ignore</h1><p>样例目录结构:  </p>
+<pre><code>python  
+  \source  
+    \cache  
+      \other
+</code></pre><p>执行st命令</p>
+<pre><code>$ svn st
+M source
+? cache
+</code></pre><p>未受版本控制的可以直接加入忽视，已受版本控制的先删除并提交svn server，再添加忽视。<br>忽略cache，<strong>以下命令只能添加一个，再使用此命令会覆盖之前，之前添加忽视的将被移除</strong>。</p>
+<pre><code>svn propset svn:ignore cache .
+</code></pre><p>where svn:ignore is the name of the property you’re setting, cache is the value of the property, and . is the directory you’re setting this property on. It should be the parent directory of the cachedirectory that needs the property.</p>
 <p>查看哪些属性被设置了</p>
-<blockquote>
-<p>svn proplist</p>
-<p>Properties on ‘.’:<br>svn:ignore</p>
-</blockquote>
-<p>查看svn:ignore的属性值</p>
-<blockquote>
-<p>svn propget svn:ignore<br>cache</p>
-</blockquote>
-<p>删除设置的属性值</p>
-<blockquote>
-<p>svn propdel svn:ignore</p>
-</blockquote>
-
+<pre><code>$ svn proplist
+Properties on &apos;.&apos;:
+  svn:ignore
+</code></pre><p>查看svn:ignore的属性值</p>
+<pre><code>$ svn propget svn:ignore
+cache
+</code></pre><p>删除设置的属性值 </p>
+<pre><code>svn propdel svn:ignore
+</code></pre>
           
         
       
