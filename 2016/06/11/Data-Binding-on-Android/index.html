@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="test," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="description" content="Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。
+Build EnvironmentAndroid官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2016/06/01/hello-world/index.html">
+<meta property="og:title" content="Data Binding on Android">
+<meta property="og:url" content="http://yoursite.com/2016/06/11/Data-Binding-on-Android/index.html">
 <meta property="og:site_name" content="Jimmy's Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-06-02T09:05:24.000Z">
+<meta property="og:description" content="Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。
+Build EnvironmentAndroid官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常">
+<meta property="og:updated_time" content="2016-06-11T10:02:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="Data Binding on Android">
+<meta name="twitter:description" content="Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。
+Build EnvironmentAndroid官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常">
 
 
 
@@ -114,7 +114,7 @@ Quick">
   };
 </script>
 
-  <title> Hello World | Jimmy's Blog </title>
+  <title> Data Binding on Android | Jimmy's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -244,7 +244,7 @@ Quick">
             
             
               
-                Hello World
+                Data Binding on Android
               
             
           </h1>
@@ -256,8 +256,8 @@ Quick">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-01T10:27:49+08:00" content="2016-06-01">
-              2016-06-01
+            <time itemprop="dateCreated" datetime="2016-06-11T15:39:08+08:00" content="2016-06-11">
+              2016-06-11
             </time>
           </span>
 
@@ -284,15 +284,87 @@ Quick">
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。</p>
+<h1 id="Build-Environment"><a href="#Build-Environment" class="headerlink" title="Build Environment"></a>Build Environment</h1><p>Android官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常规Android工程配置相比，Data Binding支持需要配置如下编译环境：</p>
+<ol>
+<li>Android Studio 1.3以上才支持Android数据绑定</li>
+<li>在Android SDK manager中下载最新的Android Support Library</li>
+<li>在app工程build.gradle中配置dataBinding支持开关</li>
+<li>在build.gradle添加dataBinding依赖库</li>
+</ol>
+<p>build.gradle配置如下：</p>
+<pre><code>android {
+    ....
+    // dataBindng开关
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    ....
+    // 添加dataBinding支持依赖库
+    compile &apos;com.android.support:appcompat-v7:23.3.0&apos;
+}
+</code></pre><h1 id="Hello-DataBinding"><a href="#Hello-DataBinding" class="headerlink" title="Hello DataBinding"></a>Hello DataBinding</h1><h2 id="DataBinding-Layout"><a href="#DataBinding-Layout" class="headerlink" title="DataBinding Layout"></a>DataBinding Layout</h2><p>DataBinding layout文件与普通layout有所不同，它的布局根节点是layout，下面是数据节点data，跟data同一层级是正常的layout布局文件。main_activity.xml代码如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;&gt;
+    &lt;data&gt;
+        &lt;variable name=&quot;user&quot; type=&quot;com.jimmy.demo.databinding.simple.model.User&quot;/&gt;
+    &lt;/data&gt;
+
+    &lt;RelativeLayout
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:paddingLeft=&quot;@dimen/activity_horizontal_margin&quot;
+            android:paddingRight=&quot;@dimen/activity_horizontal_margin&quot;
+            android:paddingTop=&quot;@dimen/activity_vertical_margin&quot;
+            android:paddingBottom=&quot;@dimen/activity_vertical_margin&quot;
+            tools:context=&quot;com.jimmy.demo.databinding.simple.MainActivity&quot;&gt;
+
+        &lt;TextView
+                android:id=&quot;@+id/tv_name&quot;
+                android:text=&quot;@{user.name}&quot;
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;/&gt;
+
+        &lt;TextView
+                android:id=&quot;@+id/tv_age&quot;
+                android:text=&quot;@{String.valueOf(user.age)}&quot;
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:layout_toRightOf=&quot;@id/tv_name&quot;
+                android:layout_marginLeft=&quot;10dp&quot;/&gt;
+    &lt;/RelativeLayout&gt;
+&lt;/layout&gt;
+</code></pre><p>data中申明了变量user，type属性指定了user对应的Java类com.jimmy.demo.databinding.simple.model.User。User是一个普通的Java实体类：</p>
+<pre><code>public class User {
+
+    public String name;
+    public int age;
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+}
+</code></pre><p>申明了user变量，在后面的布局中就可以用@{}语法表达式的方式使用user属性，如上面布局文件中TextView属性android:text=”@{user.name}”，由于user.age是int类型，所以使用的时候需要转换成String类型，String是常用类在布局文件中不需要import就能直接使用。</p>
+<p>这里就可以看到数据绑定的特点，布局文件中属性值绑定之后是可以动态变化的，而不需要通过在代码中找到对应View逐一修改。</p>
+<h2 id="Binding-Data"><a href="#Binding-Data" class="headerlink" title="Binding Data"></a>Binding Data</h2><p>完成data-binding布局文件，会默认生成对应的class(例如上面的main_activity.xml会生成MainActivityBinding.class)也可以在布局文件data节点中添加class属性指定Binding class名字。</p>
+<pre><code>&lt;data class=&quot;com.jimmy.demo.MyBinding&quot;&gt;
+    ....
+&lt;/data&gt;
+</code></pre><p>在Activity或者Fragment中用DataBindingUtil设置布局，返回Binding class对象，这里是MainActivityBinding对象，然后绑定User实体数据。</p>
+<pre><code>@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+    user = new User(&quot;Amanada&quot;, 25);
+    binding.setUser(user);
+}
+</code></pre><p>至此，一个简单的Android数据绑定demo就完成了，运行demo可以看到两个TextView的值分别为Amanda和25。</p>
 
       
     </div>
@@ -312,24 +384,18 @@ Quick">
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/test/" rel="tag">#test</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/06/01/svn-command/" rel="next" title="Svn Command">
+                <i class="fa fa-chevron-left"></i> Svn Command
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/01/svn-command/" rel="prev" title="Svn Command">
-                Svn Command <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -443,7 +509,7 @@ Quick">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Build-Environment"><span class="nav-number">1.</span> <span class="nav-text">Build Environment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hello-DataBinding"><span class="nav-number">2.</span> <span class="nav-text">Hello DataBinding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DataBinding-Layout"><span class="nav-number">2.1.</span> <span class="nav-text">DataBinding Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binding-Data"><span class="nav-number">2.2.</span> <span class="nav-text">Binding Data</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
