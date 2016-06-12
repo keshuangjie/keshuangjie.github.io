@@ -100,7 +100,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"left","display":"hide"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -1143,6 +1143,350 @@ protected void onCreate(Bundle savedInstanceState) {
             
               
                 
+                <a class="post-title-link" href="/2013/01/18/Android-Install-busybox/" itemprop="url">
+                  Android Install busybox
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-01-18T17:08:44+08:00" content="2013-01-18">
+              2013-01-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>没有root的手机无法导出/data、/system等系统目录下的文件。</p>
+<p>虽然使用cat命令先将其copy到/mnt/sdcard中，然后再用adb pull命令导出到pc可以实现。但是cat命令只能copy单个文件，如果想导出文件夹需要进行多次操作。</p>
+<p>linux中的cp命令可以显示对文件夹的递归复制，可惜android系统不自带cp命令，不过我们可以像<a href="/2012/12/05/Android-Install-Sqlite3/">安装sqlite3命令</a>一样安装cp命令。</p>
+<p>BusyBox 是一个集成了一百多个最常用linux命令和工具的软件。BusyBox 包含了一些简单的工具，例如ls、cat和 echo等等，还包含了一些更大、更复杂的工具，例如 grep、find、mout 以及 telnet。</p>
+<p><strong>安装busybox步骤：</strong></p>
+<p>1、下载BusyBox的binary，打开这个地址 <a href="http://www.busybox.net/downloads/binaries" target="_blank" rel="external">http://www.busybox.net/downloads/binaries</a> ，选择最新版本，我下载了busybox-armv6l。</p>
+<p>2、需要有一个命令行的环境，在电脑上使用adb或在手机上使用terminal emulator。</p>
+<p>3、使用adb push busybox-armv6 /mnt/sdcard/busybox-armv6l导入sdcard中</p>
+<p>4、输入以下命令，使/system目录可读写</p>
+<blockquote>
+<p>adb shell<br>su<br>mount -o remount,rw -t yaffs2 /dev/block/mtdblock3 /system 或者  mount -o remount,rw /emmc@android(分区的物理地址)</p>
+</blockquote>
+<p>5、复制 busybox 文件到 /system/xbin，并为其分配“可执行”的权限</p>
+<blockquote>
+<p>cat /mnt/sdcard/busybox &gt; /system/xbin<br>chmod 755 busybox</p>
+</blockquote>
+<p>6、这时就可以使用 busybox 的命令了，例如使用cp命令busy cp。每次前面都加上个busybox太麻烦了，所以我们还要继续完成安装。</p>
+<p>7、安装busybox，在/system/xbin输入：</p>
+<blockquote>
+<p>busybox –install .</p>
+</blockquote>
+<p>如果想安装到其他路径，将.改成绝对路径</p>
+<p>busybox就此安装完成，现在就可以用cp等命令了。安装失败的同学再看下以上步骤，是否有遗漏。</p>
+<p><strong>小技巧：</strong></p>
+<ol>
+<li><p>busybox 里有 ash 和 hush 还有 sh 这几种 shell，在命令行输入 ash 或 hush，可以像在 bash 里那样，通过按上下键选择刚才输入的命令。</p>
+</li>
+<li><p>android系统本身就有ls命令，busybox里也有ls，输入ls时调用的是android的ls，那么想用busybox的ls就要每次都在前面加个busybox吗？不用，使用alias命令可以搞定。</p>
+</li>
+</ol>
+<blockquote>
+<p>alias ls=’busybox ls’</p>
+</blockquote>
+<p>同样的，cp、mv等二者都有的命令都可以这样搞定。也可以通过修改 /init.rc 来解决。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/12/05/Android-Install-Sqlite3/" itemprop="url">
+                  Android Install Sqlite3
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-05T16:43:22+08:00" content="2012-12-05">
+              2012-12-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在adb模式下用sqlite3命令查看数据库sqlite3 dbName提示：</p>
+<blockquote>
+<p>/system/bin/sh: sqlite3: not found</p>
+</blockquote>
+<p>原来android系统没有自带sqlite3命令，所以需要我们自己安装（其实只是将sqlite3文件导入相应目录）。</p>
+<p>网上查了下，需要先将sqlite3文件导入到手机/system/xbin/目录下，然后将libncurses.so库文件导入/system/lib/目录。</p>
+<p>貌似很简单，但却浪费了我两个小时，不过也在这过程中学到了不少新的知识。现在将经历的过程简单记载。</p>
+<p><strong>步骤：</strong></p>
+<p>1、下载sqlite3文件和libncurses.so库文件</p>
+<p>2、将sqlite3和libncurses.so导入到android系统目录（<strong>重点</strong>）</p>
+<p>我用的小米手机，虽然有root权限，但是感觉并没有完全拥有权限。</p>
+<p>开始想到的最简单办法就是使用adb push将pc上sqlite文件copy到/system/xbin ，出现下面提示：</p>
+<blockquote>
+<p>failed to copy ‘C:\Users\User\Desktop\download\sqlite\sqlite3’ to ‘/system/xbin/sqlite3’: Read-only file system</p>
+</blockquote>
+<p>后来google有大牛说要遇到这种情况，要执行adb remount命令，又出现下面提示：</p>
+<blockquote>
+<p>remount failed: Operation not permitted</p>
+</blockquote>
+<p>用adb push这条路是走不通了，只好找其他方法。结果看到有大牛说可以先利用adb push命令将sqlite3文件导入手机sdcard中，然后再用linux下命令cp复制系统文件夹，命令如下：</p>
+<blockquote>
+<p>cp /mnt/sdcard/sqlite3  /system/xbin/sqlite3</p>
+</blockquote>
+<p>当时感觉像发现了新大陆，心想终于可以解决了，结果提示：</p>
+<blockquote>
+<p>/system/bin/sh: cp: not found</p>
+</blockquote>
+<p>我就纳闷了网上好多人说可以用cp命令，怎么我的手机下怎么没有呢，看了下/system/xbin/，目录下确实没有cp文件。原来android命令行没有cp命令，但是有mv命令，于是执行</p>
+<blockquote>
+<p>mv /mnt/sdcard/sqlite3  /system/xbin/sqlite3</p>
+</blockquote>
+<p>提示：</p>
+<blockquote>
+<p>failed on ‘/mnt/sdcard/sqlite3’ - Cross-device link</p>
+</blockquote>
+<p>也就是说mv命令不允许将存储卡中的文件复制到/system/或/data/分区中，因为两者被认为是在不同的设备上。只能再google……</p>
+<p>后来发现了cat命令，查一下cat的用法：cat [选项]… [文件]… ，其作用是将[文件]或标准输入组合输出到标准输出。网上大牛：“平常工作时偶尔会用到cat命令去显示文本文件的内容，然后又想到了重定向符’&gt;’，所以两者一结合，就自然则然地想到是否可以通过将cat的文件输出到指定位置来代替cp的功能？通过尝试发现确实可以。”</p>
+<p>于是尝试：</p>
+<blockquote>
+<p>cat /mnt/sdcard/sqlite3 &gt; /system/xbin/sqlite3</p>
+</blockquote>
+<p>提示：</p>
+<blockquote>
+<p>/system/bin/sh: cannot create /system/xbin/sqlite3: Read-only file system</p>
+</blockquote>
+<p>看到这个我觉感觉有希望了，cat确实有copy的功能。之前看到过这提示好解决，先将/system处于挂载状态，允许读写，命令如下：</p>
+<blockquote>
+<p>mount -o remount,rw -t yaffs2 /dev/block/mtdblock3 /system</p>
+</blockquote>
+<p>在执行cat命令就OK了，然后将libncurses.so库文件按上面方法导入到/system/lib/，完整命令如下：</p>
+<p>导入到sdcard：</p>
+<blockquote>
+<p>adb push C:\Users\User\Desktop\downloa\libncurses.so  /mnt/sdcard/libncurses.so</p>
+</blockquote>
+<p>将/system处于挂载状态，使可读写：</p>
+<blockquote>
+<p>mount -o remount,rw -t yaffs2 /dev/block/mtdblock3 /system</p>
+</blockquote>
+<p>复制到系统文件夹：</p>
+<blockquote>
+<p>cat /mnt/sdcard/libncurses.so &gt; /system/lib/libncurses.so</p>
+</blockquote>
+<p>3、给sqlite赋予权限</p>
+<p>将sqlite3文件和libncurses.so库文件导入到相应目录后，adb模式下执行sqlite3命令提示：</p>
+<blockquote>
+<p>/system/bin/sh: sqlite3: cannot execute - Permission denied</p>
+</blockquote>
+<p>没有权限，需要添加，命令如下：</p>
+<blockquote>
+<p>chmod 4755 sqlite3</p>
+</blockquote>
+<p>验证sqlite3是否有权限：</p>
+<blockquote>
+<p>ll sqlite3 </p>
+</blockquote>
+<p>提示：</p>
+<blockquote>
+<p>-rwxr-xr-x root root 36860 2012-08-15 21:45 sqlite3</p>
+</blockquote>
+<p>再执行sqlite3命令，提示如下：</p>
+<blockquote>
+<p>shell@android:/ # sqlite3<br>sqlite3<br>SQLite version 3.7.4<br>Enter “.help” for instructions<br>Enter SQL statements terminated with a “;”<br>sqlite&gt;</p>
+</blockquote>
+<p>OK，大功告成。感谢网上各位大牛的文章指导。</p>
+<p>参考文章如下：</p>
+<p><a href="http://blog.csdn.net/ygc87/article/details/7452422" target="_blank" rel="external">http://blog.csdn.net/ygc87/article/details/7452422</a><br><a href="http://stackoverflow.com/questions/3645319/why-do-i-get-a-sqlite3-not-found-error-on-a-rooted-nexus-one-when-i-try-to-op" target="_blank" rel="external">http://stackoverflow.com/questions/3645319/why-do-i-get-a-sqlite3-not-found-error-on-a-rooted-nexus-one-when-i-try-to-op</a><br><a href="http://www.andwp.net/tag/sqlite3/" target="_blank" rel="external">http://www.andwp.net/tag/sqlite3/</a><br><a href="http://weiweiabc109.blog.163.com/blog/static/28357220123211481870/" target="_blank" rel="external">http://weiweiabc109.blog.163.com/blog/static/28357220123211481870/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/11/30/毕业5月/" itemprop="url">
                   毕业5月
                 </a>
@@ -1407,7 +1751,7 @@ protected void onCreate(Bundle savedInstanceState) {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1424,7 +1768,7 @@ protected void onCreate(Bundle savedInstanceState) {
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

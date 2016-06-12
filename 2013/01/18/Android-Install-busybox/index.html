@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="data-binding," />
+  <meta name="keywords" content="adb,busybox," />
 
 
 
@@ -84,19 +84,25 @@
 
 
 
-<meta name="description" content="Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。
-Build EnvironmentAndroid官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常">
+<meta name="description" content="没有root的手机无法导出/data、/system等系统目录下的文件。
+虽然使用cat命令先将其copy到/mnt/sdcard中，然后再用adb pull命令导出到pc可以实现。但是cat命令只能copy单个文件，如果想导出文件夹需要进行多次操作。
+linux中的cp命令可以显示对文件夹的递归复制，可惜android系统不自带cp命令，不过我们可以像安装sqlite3命令一样安装cp命令。
+B">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Data Binding on Android">
-<meta property="og:url" content="http://yoursite.com/2016/06/11/Data-Binding-on-Android/index.html">
+<meta property="og:title" content="Android Install busybox">
+<meta property="og:url" content="http://yoursite.com/2013/01/18/Android-Install-busybox/index.html">
 <meta property="og:site_name" content="Jimmy's Blog">
-<meta property="og:description" content="Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。
-Build EnvironmentAndroid官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常">
-<meta property="og:updated_time" content="2016-06-12T02:28:31.000Z">
+<meta property="og:description" content="没有root的手机无法导出/data、/system等系统目录下的文件。
+虽然使用cat命令先将其copy到/mnt/sdcard中，然后再用adb pull命令导出到pc可以实现。但是cat命令只能copy单个文件，如果想导出文件夹需要进行多次操作。
+linux中的cp命令可以显示对文件夹的递归复制，可惜android系统不自带cp命令，不过我们可以像安装sqlite3命令一样安装cp命令。
+B">
+<meta property="og:updated_time" content="2016-06-12T06:39:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Data Binding on Android">
-<meta name="twitter:description" content="Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。
-Build EnvironmentAndroid官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常">
+<meta name="twitter:title" content="Android Install busybox">
+<meta name="twitter:description" content="没有root的手机无法导出/data、/system等系统目录下的文件。
+虽然使用cat命令先将其copy到/mnt/sdcard中，然后再用adb pull命令导出到pc可以实现。但是cat命令只能copy单个文件，如果想导出文件夹需要进行多次操作。
+linux中的cp命令可以显示对文件夹的递归复制，可惜android系统不自带cp命令，不过我们可以像安装sqlite3命令一样安装cp命令。
+B">
 
 
 
@@ -114,7 +120,7 @@ Build EnvironmentAndroid官网已经提供了支持Data Binding的support librar
   };
 </script>
 
-  <title> Data Binding on Android | Jimmy's Blog </title>
+  <title> Android Install busybox | Jimmy's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -244,7 +250,7 @@ Build EnvironmentAndroid官网已经提供了支持Data Binding的support librar
             
             
               
-                Data Binding on Android
+                Android Install busybox
               
             
           </h1>
@@ -256,8 +262,8 @@ Build EnvironmentAndroid官网已经提供了支持Data Binding的support librar
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-11T15:39:08+08:00" content="2016-06-11">
-              2016-06-11
+            <time itemprop="dateCreated" datetime="2013-01-18T17:08:44+08:00" content="2013-01-18">
+              2013-01-18
             </time>
           </span>
 
@@ -303,87 +309,40 @@ Build EnvironmentAndroid官网已经提供了支持Data Binding的support librar
       
 
       
-        <p>Data Binbing框架是在2015年Google I/O大会上最早提出来的，一直在Android开发者中热议，但是很少有真正在项目中用到。本文简单介绍Data Binding框架的简单用法以及其特点。</p>
-<h1 id="Build-Environment"><a href="#Build-Environment" class="headerlink" title="Build Environment"></a>Build Environment</h1><p>Android官网已经提供了支持Data Binding的support library，支持Android 2.1(API level 7+)以上版本。与常规Android工程配置相比，Data Binding支持需要配置如下编译环境：</p>
+        <p>没有root的手机无法导出/data、/system等系统目录下的文件。</p>
+<p>虽然使用cat命令先将其copy到/mnt/sdcard中，然后再用adb pull命令导出到pc可以实现。但是cat命令只能copy单个文件，如果想导出文件夹需要进行多次操作。</p>
+<p>linux中的cp命令可以显示对文件夹的递归复制，可惜android系统不自带cp命令，不过我们可以像<a href="/2012/12/05/Android-Install-Sqlite3/">安装sqlite3命令</a>一样安装cp命令。</p>
+<p>BusyBox 是一个集成了一百多个最常用linux命令和工具的软件。BusyBox 包含了一些简单的工具，例如ls、cat和 echo等等，还包含了一些更大、更复杂的工具，例如 grep、find、mout 以及 telnet。</p>
+<p><strong>安装busybox步骤：</strong></p>
+<p>1、下载BusyBox的binary，打开这个地址 <a href="http://www.busybox.net/downloads/binaries" target="_blank" rel="external">http://www.busybox.net/downloads/binaries</a> ，选择最新版本，我下载了busybox-armv6l。</p>
+<p>2、需要有一个命令行的环境，在电脑上使用adb或在手机上使用terminal emulator。</p>
+<p>3、使用adb push busybox-armv6 /mnt/sdcard/busybox-armv6l导入sdcard中</p>
+<p>4、输入以下命令，使/system目录可读写</p>
+<blockquote>
+<p>adb shell<br>su<br>mount -o remount,rw -t yaffs2 /dev/block/mtdblock3 /system 或者  mount -o remount,rw /emmc@android(分区的物理地址)</p>
+</blockquote>
+<p>5、复制 busybox 文件到 /system/xbin，并为其分配“可执行”的权限</p>
+<blockquote>
+<p>cat /mnt/sdcard/busybox &gt; /system/xbin<br>chmod 755 busybox</p>
+</blockquote>
+<p>6、这时就可以使用 busybox 的命令了，例如使用cp命令busy cp。每次前面都加上个busybox太麻烦了，所以我们还要继续完成安装。</p>
+<p>7、安装busybox，在/system/xbin输入：</p>
+<blockquote>
+<p>busybox –install .</p>
+</blockquote>
+<p>如果想安装到其他路径，将.改成绝对路径</p>
+<p>busybox就此安装完成，现在就可以用cp等命令了。安装失败的同学再看下以上步骤，是否有遗漏。</p>
+<p><strong>小技巧：</strong></p>
 <ol>
-<li>Android Studio 1.3以上才支持Android数据绑定</li>
-<li>在Android SDK manager中下载最新的Android Support Library</li>
-<li>在app工程build.gradle中配置dataBinding支持开关</li>
-<li>在build.gradle添加dataBinding依赖库</li>
+<li><p>busybox 里有 ash 和 hush 还有 sh 这几种 shell，在命令行输入 ash 或 hush，可以像在 bash 里那样，通过按上下键选择刚才输入的命令。</p>
+</li>
+<li><p>android系统本身就有ls命令，busybox里也有ls，输入ls时调用的是android的ls，那么想用busybox的ls就要每次都在前面加个busybox吗？不用，使用alias命令可以搞定。</p>
+</li>
 </ol>
-<p>build.gradle配置如下：</p>
-<pre><code>android {
-    ....
-    // dataBindng开关
-    dataBinding {
-        enabled = true
-    }
-}
-
-dependencies {
-    ....
-    // 添加dataBinding支持依赖库
-    compile &apos;com.android.support:appcompat-v7:23.3.0&apos;
-}
-</code></pre><h1 id="Hello-DataBinding"><a href="#Hello-DataBinding" class="headerlink" title="Hello DataBinding"></a>Hello DataBinding</h1><h2 id="DataBinding-Layout"><a href="#DataBinding-Layout" class="headerlink" title="DataBinding Layout"></a>DataBinding Layout</h2><p>DataBinding layout文件与普通layout有所不同，它的布局根节点是layout，下面是数据节点data，跟data同一层级是正常的layout布局文件。main_activity.xml代码如下：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    xmlns:tools=&quot;http://schemas.android.com/tools&quot;&gt;
-    &lt;data&gt;
-        &lt;variable name=&quot;user&quot; type=&quot;com.jimmy.demo.databinding.simple.model.User&quot;/&gt;
-    &lt;/data&gt;
-
-    &lt;RelativeLayout
-            android:layout_width=&quot;match_parent&quot;
-            android:layout_height=&quot;match_parent&quot;
-            android:paddingLeft=&quot;@dimen/activity_horizontal_margin&quot;
-            android:paddingRight=&quot;@dimen/activity_horizontal_margin&quot;
-            android:paddingTop=&quot;@dimen/activity_vertical_margin&quot;
-            android:paddingBottom=&quot;@dimen/activity_vertical_margin&quot;
-            tools:context=&quot;com.jimmy.demo.databinding.simple.MainActivity&quot;&gt;
-
-        &lt;TextView
-                android:id=&quot;@+id/tv_name&quot;
-                android:text=&quot;@{user.name}&quot;
-                android:layout_width=&quot;wrap_content&quot;
-                android:layout_height=&quot;wrap_content&quot;/&gt;
-
-        &lt;TextView
-                android:id=&quot;@+id/tv_age&quot;
-                android:text=&quot;@{String.valueOf(user.age)}&quot;
-                android:layout_width=&quot;wrap_content&quot;
-                android:layout_height=&quot;wrap_content&quot;
-                android:layout_toRightOf=&quot;@id/tv_name&quot;
-                android:layout_marginLeft=&quot;10dp&quot;/&gt;
-    &lt;/RelativeLayout&gt;
-&lt;/layout&gt;
-</code></pre><p>data中申明了变量user，type属性指定了user对应的Java类com.jimmy.demo.databinding.simple.model.User。User是一个普通的Java实体类：</p>
-<pre><code>public class User {
-
-    public String name;
-    public int age;
-
-    public User(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-}
-</code></pre><p>申明了user变量，在后面的布局中就可以用@{}语法表达式的方式使用user属性，如上面布局文件中TextView属性android:text=”@{user.name}”，由于user.age是int类型，所以使用的时候需要转换成String类型，String是常用类在布局文件中不需要import就能直接使用。</p>
-<p>这里就可以看到数据绑定的特点，布局文件中属性值绑定之后是可以动态变化的，而不需要通过在代码中找到对应View逐一修改。</p>
-<h2 id="Binding-Data"><a href="#Binding-Data" class="headerlink" title="Binding Data"></a>Binding Data</h2><p>完成data-binding布局文件，会默认生成对应的class(例如上面的main_activity.xml会生成MainActivityBinding.class)也可以在布局文件data节点中添加class属性指定Binding class名字。</p>
-<pre><code>&lt;data class=&quot;com.jimmy.demo.MyBinding&quot;&gt;
-    ....
-&lt;/data&gt;
-</code></pre><p>在Activity或者Fragment中用DataBindingUtil设置布局，返回Binding class对象，这里是MainActivityBinding对象，然后绑定User实体数据。</p>
-<pre><code>@Override
-protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-    user = new User(&quot;Amanada&quot;, 25);
-    binding.setUser(user);
-}
-</code></pre><p>至此，一个简单的Android数据绑定demo就完成了，运行demo可以看到两个TextView的值分别为Amanda和25。</p>
+<blockquote>
+<p>alias ls=’busybox ls’</p>
+</blockquote>
+<p>同样的，cp、mv等二者都有的命令都可以这样搞定。也可以通过修改 /init.rc 来解决。</p>
 
       
     </div>
@@ -405,7 +364,9 @@ protected void onCreate(Bundle savedInstanceState) {
       
         <div class="post-tags">
           
-            <a href="/tags/data-binding/" rel="tag">#data-binding</a>
+            <a href="/tags/adb/" rel="tag">#adb</a>
+          
+            <a href="/tags/busybox/" rel="tag">#busybox</a>
           
         </div>
       
@@ -414,13 +375,17 @@ protected void onCreate(Bundle savedInstanceState) {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/01/svn-command/" rel="next" title="Svn Command">
-                <i class="fa fa-chevron-left"></i> Svn Command
+              <a href="/2012/12/05/Android-Install-Sqlite3/" rel="next" title="Android Install Sqlite3">
+                <i class="fa fa-chevron-left"></i> Android Install Sqlite3
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/10/25/Android配置使用MonkeyTalk/" rel="prev" title="Android配置使用MonkeyTalk">
+                Android配置使用MonkeyTalk <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -534,7 +499,7 @@ protected void onCreate(Bundle savedInstanceState) {
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Build-Environment"><span class="nav-number">1.</span> <span class="nav-text">Build Environment</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hello-DataBinding"><span class="nav-number">2.</span> <span class="nav-text">Hello DataBinding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DataBinding-Layout"><span class="nav-number">2.1.</span> <span class="nav-text">DataBinding Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binding-Data"><span class="nav-number">2.2.</span> <span class="nav-text">Binding Data</span></a></li></ol></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
