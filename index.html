@@ -656,6 +656,493 @@ protected void onCreate(Bundle savedInstanceState) {
             
               
                 
+                <a class="post-title-link" href="/2015/02/11/偶遇/" itemprop="url">
+                  偶遇
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-02-11T15:36:33+08:00" content="2015-02-11">
+              2015-02-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/杂谈/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>佛说：前世五百次的回眸才能换来今生的一次擦身而过，那么要多少次的回眸，才换得人海茫茫中的相遇、相知、相爱。</p>
+</blockquote>
+<p>2015年1月17日 下午3点 北京西单 我遇上了她——阿漫 ！！！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/11/MonkeyTalk、Jenkins和ant构建android自动化测试/" itemprop="url">
+                  MonkeyTalk、Jenkins和Ant构建Android自动化测试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-11T17:23:09+08:00" content="2014-01-11">
+              2014-01-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Test/" itemprop="url" rel="index">
+                    <span itemprop="name">Test</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最终效果一键实现Andriod app自动化测试：更新版本库最新代码、打包签名、安装、启动、运行测试脚本、发送测试报告</p>
+<h1 id="涉及工具"><a href="#涉及工具" class="headerlink" title="涉及工具"></a>涉及工具</h1><h2 id="MonkeyTalk"><a href="#MonkeyTalk" class="headerlink" title="MonkeyTalk"></a>MonkeyTalk</h2><p>移动平台自动化测试工具，支持android、ios、phone web平台测试脚本的录制、编辑、回放，测试目标可以是真机或者模拟器，更多请参考<a href="https://www.cloudmonkeymobile.com/monkeytalk" target="_blank" rel="external">MonkeyTalk官网</a>、<a href="http://whutec.sinaapp.com/2013/10/android平台下配置使用monkeytalk/" target="_blank" rel="external">Android配置使用MonkeyTalk</a>。</p>
+<h2 id="Ant"><a href="#Ant" class="headerlink" title="Ant"></a>Ant</h2><p>实现将Android工程转化成AspectJProject。</p>
+<p>MonkeyTalk实现控制真机或者模拟器进行自动化测试，安装的android工程必须要添加monkeytalk-agent-1.0.58.jar(位于monkeytalk-&gt;agents-&gt;andriod)和将android工程转换成AspectJProject。</p>
+<p>ant复制monkeytalk-agent-1.0.58.jar到android工程libs目录下：</p>
+<pre><code>&lt;!-- copy monkeytalk-agent lib to project libs --&gt;
+&lt;target name=&quot;copy-monkeytalk-agent&quot; &gt;
+    &lt;copy todir=&quot;${basedir}/libs&quot; &gt;
+        &lt;fileset file=&quot;${mt.agent.dir}&quot; /&gt;
+    &lt;/copy&gt;
+&lt;/target&gt;
+</code></pre><p>ant将android工程转换成AspectJProject，需要下载<a href="http://eclipse.org/aspectj/" target="_blank" rel="external">AspectJ</a>。将AspectJ-&gt;libs-&gt;aspectjrt.jar复制到android工程libs目录下：</p>
+<pre><code>&lt;!-- copy aspectjrt lib to project libs --&gt;
+&lt;target name=&quot;copy-aspectjrt&quot; &gt;
+    &lt;copy todir=&quot;${basedir}/libs&quot; &gt;
+        &lt;fileset file=&quot;${aspectjrt.dir}&quot; /&gt;
+    &lt;/copy&gt;
+&lt;/target&gt;
+</code></pre><p>重写-post-compile任务，将android工程编译成AspectJ工程：</p>
+<pre><code>&lt;target name=&quot;-post-compile&quot; &gt;
+    &lt;property
+        name=&quot;classes.woven.dir&quot;
+        value=&quot;${out.classes.absolute.dir}/../classes-woven&quot; /&gt;
+
+    &lt;!-- setup aspectj ant tasks --&gt;
+    &lt;taskdef resource=&quot;org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties&quot; &gt;
+        &lt;classpath&gt;
+            &lt;pathelement location=&quot;${aspectj.dir}/lib/aspectjtools.jar&quot; /&gt;
+        &lt;/classpath&gt;
+    &lt;/taskdef&gt;
+
+    &lt;condition
+        property=&quot;android.jar&quot;
+        value=&quot;${project.target.android.jar}&quot; &gt;
+
+        &lt;isset property=&quot;project.target.android.jar&quot; /&gt;
+    &lt;/condition&gt;
+
+    &lt;fail
+        message=&quot;android.jar is missing. This must point to the target SDK&amp;apos;s android.jar.&quot;
+        unless=&quot;android.jar&quot; /&gt;
+
+    &lt;iajc
+        destDir=&quot;${classes.woven.dir}&quot;
+        showWeaveInfo=&quot;true&quot; &gt;
+
+        &lt;!-- 将monkeytalk-agent-1.0.58.jar加入aspectpath --&gt;
+        &lt;aspectpath&gt;
+            &lt;pathelement location=&quot;${basedir}/libs/monkeytalk-agent-1.0.58.jar&quot; /&gt;
+        &lt;/aspectpath&gt;
+
+        &lt;inpath&gt;
+            &lt;pathelement location=&quot;${out.classes.absolute.dir}&quot; /&gt;
+        &lt;/inpath&gt;
+
+        &lt;classpath&gt;
+            &lt;pathelement location=&quot;${out.classes.absolute.dir}&quot; /&gt;
+
+            &lt;pathelement location=&quot;${android.jar}&quot; /&gt;
+
+            &lt;fileset dir=&quot;${basedir}/libs&quot; &gt;
+                &lt;include name=&quot;**/*.jar&quot; /&gt;
+            &lt;/fileset&gt;
+
+            &lt;pathelement location=&quot;${basedir}/libs/android-support-v4.jar&quot; /&gt;
+            &lt;!-- 第三方lib工程 --&gt;
+            &lt;pathelement location=&quot;../androidKu-union_pay/bin/classes.jar&quot; /&gt;
+        &lt;/classpath&gt;
+    &lt;/iajc&gt;
+
+    &lt;!-- remove the old classes dir, and replace with new &quot;woven&quot; classes --&gt;
+    &lt;delete dir=&quot;${out.classes.absolute.dir}&quot; /&gt;
+
+    &lt;mkdir dir=&quot;${out.classes.absolute.dir}&quot; /&gt;
+
+    &lt;copy todir=&quot;${out.classes.absolute.dir}&quot; &gt;
+        &lt;fileset dir=&quot;${classes.woven.dir}&quot; /&gt;
+    &lt;/copy&gt;
+&lt;/target&gt;
+</code></pre><p>使用ant运行写好的测试脚本，首先将monkeyTalk-&gt;ant-&gt;monkeytalk-ant-1.0.58.jar复制到ant安装目录的lib中。运行测试脚本时要app对应的界面处于运行可见状态。ant脚本：</p>
+<pre><code>&lt;!-- mt-script.dir：MonkeyTalk测试工程路径--&gt;
+&lt;!--reports.dir：运行完成后生产的包括路径--&gt;
+&lt;target name=&quot;mtRun&quot; depends=&quot;clean-reports&quot;&gt;
+     &lt;monkeytalk:run agent=&quot;AndroidEmulator&quot;
+      adb=&quot;${sdk.dir}/platform-tools/adb.exe&quot;
+      script=&quot;${mt-script.dir}&quot;
+      reportdir=&quot;${reports.dir}&quot;
+      thinktime=&quot;2000&quot;
+      timeout=&quot;5000&quot;
+      verbose=&quot;true&quot; /&gt;
+&lt;/target&gt;
+</code></pre><p>同时配置多个设备请参考<a href="https://www.cloudmonkeymobile.com/monkeytalk-documentation/monkeytalk-user-guide/ant-runner" target="_blank" rel="external">MonkeyTalk ant-runner
+</a>。</p>
+<p>使用ant发送邮件，要用到mail对应的task库，如果ant-&gt;lib目录下不存在请先下载</p>
+<pre><code>&lt;!-- 发送邮件，添加reports.zip作为附件 --&gt;
+&lt;mail mailhost=&quot;${mail.host}&quot; mailport=&quot;${mail.port}&quot; user=&quot;${mail.user}&quot; password=&quot;${mail.password}&quot; subject=&quot;Android自动化脚本测试报告&quot;&gt;
+    &lt;from address=&quot;${mail.from}&quot;/&gt;
+    &lt;to address=&quot;${mail.to}&quot;/&gt;
+    &lt;message&gt;测试报告见附件&lt;/message&gt;
+    &lt;attachments&gt;
+        &lt;file name=&quot;${reports.zip.dir}&quot;/&gt;
+    &lt;/attachments&gt;
+&lt;/mail&gt;
+&lt;/target&gt;
+</code></pre><p>==注意==：ant中涉及到的文件请根据自己的路径进行配置</p>
+<h2 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h2><p>一个开源软件项目，旨在提供一个开放易用的软件平台，使持续集成变成可能(来自<a href="http://baike.baidu.com/view/6190216.htm?tp=0_11" target="_blank" rel="external">百度百科</a>)。更多请访问<a href="http://jenkins-ci.org/" target="_blank" rel="external">Jenkins官网</a><br>Jenkins的安装成功后，在浏览器中输入<a href="http://localhost:8080启动Jenkins界面，点击系统管理-&gt;系统设置" target="_blank" rel="external">http://localhost:8080启动Jenkins界面，点击系统管理-&gt;系统设置</a> 设置JDK/ANT的路径：</p>
+<p><img src="/images/jenkins-setting.png" alt=""></p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>有了上面的准备工作，就可以在Jenkins中新建项目进行自动化测试了。</p>
+<h2 id="新建Jenkins项目"><a href="#新建Jenkins项目" class="headerlink" title="新建Jenkins项目"></a>新建Jenkins项目</h2><p><img src="/images/jenkins-new-project.png" alt=""></p>
+<h2 id="源码管理"><a href="#源码管理" class="headerlink" title="源码管理"></a>源码管理</h2><p>配置android项目svn，提取项目最新代码。如果涉及到多个工程，需要配置多个：</p>
+<p><img src="/images/jenkins-svn.png" alt=""></p>
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>以下顺序不能改，任务运行时按顺序进行：</p>
+<ul>
+<li>ant进行打包</li>
+<li>使用批处理命令进行安装、启动应用。如果想同时在多个设备安装、运行，请参考               <a href="http://whutec.sinaapp.com/2013/11/adb命令同时操作多台设置/" target="_blank" rel="external">adb命令同时操作多台设备</a></li>
+<li>使用ant运行测试脚本、发送测试报告。</li>
+</ul>
+<p><img src="/images/jenkins-build.png" alt=""></p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>配置完成点击保存，回到Jenkins首页。进入AutoTest项目，点击左边的立即构建。<br>如果运行完成、控制台没有报错，那么恭喜你，android自动化测试构建成功，赶紧去邮箱查看测试报告吧。<br>报告以html展示，可以看到成功的测试用例、错误的测试用及其原因:</p>
+<p><img src="/images/jenkins-report.png" alt=""></p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>如果配置失败，或者遇到问题，欢迎留言讨论。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/10/25/Android配置使用MonkeyTalk/" itemprop="url">
+                  Android配置使用MonkeyTalk
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-25T18:09:35+08:00" content="2013-10-25">
+              2013-10-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Test/" itemprop="url" rel="index">
+                    <span itemprop="name">Test</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><h2 id="下载MonkeyTalk"><a href="#下载MonkeyTalk" class="headerlink" title="下载MonkeyTalk"></a>下载MonkeyTalk</h2><p>下载对应平台的<a href="https://www.gorillalogic.com/monkeytalk" target="_blank" rel="external">MonkeyTalk</a>（需要先注册、登陆才能下载），主要用到两个目录agents（包含一些需要放到android工程的lib文件)、MonkeyTalkIDE。monkeyTalk目录结构：</p>
+<p><img src="/images/monkeytalk-structure.png" alt=""></p>
+<h2 id="安装eclipse插件"><a href="#安装eclipse插件" class="headerlink" title="安装eclipse插件"></a>安装eclipse插件</h2><p>eclipse安装插件<a href="http://www.eclipse.org/ajdt/" target="_blank" rel="external">AJDT</a>，需要注意与eclipse的版本对应，否则会出现安装不上的问题。可以选择eclipse在线安装或者将zip包下载下来本地安装。安装完成后在eclipse项目名称上右键-&gt;Configure，如果显示的菜单中有Convert to AspectJ，则说明安装成功。</p>
+<h1 id="将Android项目转换成AspectJ-Project"><a href="#将Android项目转换成AspectJ-Project" class="headerlink" title="将Android项目转换成AspectJ Project"></a>将Android项目转换成AspectJ Project</h1><h2 id="转换工程"><a href="#转换工程" class="headerlink" title="转换工程"></a>转换工程</h2><p>右键android项目-&gt;configure-&gt;convert to AspectJ Project：</p>
+<p><img src="/images/monkeytalk-convert.png" alt=""></p>
+<p>对应的android项目下会多一个文件夹AspectJ Runtime Library。</p>
+<h2 id="添加lib库"><a href="#添加lib库" class="headerlink" title="添加lib库"></a>添加lib库</h2><p>在android项目下新建libs文件夹，将monkeytalk-&gt;agents-&gt;andriod-&gt;monkeytalk-agent-1.0.58.jar copy到libs文件夹下。<br>选中monkeytalk-agent-1.0.58.jar右键-&gt;AspectJ Tools-&gt;add toAspectpath。</p>
+<h2 id="输出库"><a href="#输出库" class="headerlink" title="输出库"></a>输出库</h2><p>对应android项目上右键–Build Path-&gt;Configure Build Path…-&gt;order and export，选中AspectJ Runtime Library，点击OK：</p>
+<p><img src="/images/monkeytalk-order-and-export.png" alt=""></p>
+<h2 id="修改AndroidManifest-xml"><a href="#修改AndroidManifest-xml" class="headerlink" title="修改AndroidManifest.xml"></a>修改AndroidManifest.xml</h2><p>在AndroidManifetst.xml里添加以下以下权限：</p>
+<pre><code>&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.GET_TASKS&quot; /&gt;
+</code></pre><p>ps: 权限INTERENT用于IDE与App通过Http通信用。权限GET_TASKS是允许程序获取当前或最近运行的应用。</p>
+<h1 id="monkeyTalkIDE-连接andriod设备"><a href="#monkeyTalkIDE-连接andriod设备" class="headerlink" title="monkeyTalkIDE 连接andriod设备"></a>monkeyTalkIDE 连接andriod设备</h1><h2 id="新建工作空间"><a href="#新建工作空间" class="headerlink" title="新建工作空间"></a>新建工作空间</h2><p>打开mokeyTalkIDE，界面跟eclipse很像，第一次需要新建一个默认的工作空间，然后进入workBench界面。</p>
+<h2 id="新建-MonkeyTalk-Project"><a href="#新建-MonkeyTalk-Project" class="headerlink" title="新建 MonkeyTalk Project"></a>新建 MonkeyTalk Project</h2><p>File-&gt;new-&gt;MonkeyTalk Projec 建一个monkeyTalk工程TestDemo，TestDemo上右键-&gt;new-&gt;Script 新建一个script文件test.mt。项目结构如下：</p>
+<p><img src="/images/monkeytalk-test.png" alt=""></p>
+<h2 id="连接设备"><a href="#连接设备" class="headerlink" title="连接设备"></a>连接设备</h2><p><img src="/images/monkeytalk-connect.png" alt=""></p>
+<p>第一个选项是连接android模拟器，第三个选项是连接android真机。连接真机需要输入手机的ip，用adb shell netcfg命令查看手机ip：</p>
+<p><img src="/images/monkeytalk-ip.png" alt=""></p>
+<p>输入ip后，如果连接成功， console会打印：</p>
+<pre><code>19:13:23.044: Connection set to device at [ip]
+</code></pre><h1 id="录制和回放"><a href="#录制和回放" class="headerlink" title="录制和回放"></a>录制和回放</h1><ul>
+<li>新建一个script文件test.mt。</li>
+<li>点击MonkeyTalk 工具栏的record按钮，然后操作android app，点击stop按钮，可以录制一段script。</li>
+<li>录制完成后，刚才的过程会显示在test.mt里。点击Play，会在设备上回放script的过程。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/11/30/毕业5月/" itemprop="url">
                   毕业5月
                 </a>
@@ -920,7 +1407,7 @@ protected void onCreate(Bundle savedInstanceState) {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -928,7 +1415,7 @@ protected void onCreate(Bundle savedInstanceState) {
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -937,7 +1424,7 @@ protected void onCreate(Bundle savedInstanceState) {
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

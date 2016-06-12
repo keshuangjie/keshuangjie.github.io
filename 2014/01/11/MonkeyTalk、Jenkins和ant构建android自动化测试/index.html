@@ -1,0 +1,726 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AutoTest,MonkeyTalk,Ant,Jenkins," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="最终效果一键实现Andriod app自动化测试：更新版本库最新代码、打包签名、安装、启动、运行测试脚本、发送测试报告
+涉及工具MonkeyTalk移动平台自动化测试工具，支持android、ios、phone web平台测试脚本的录制、编辑、回放，测试目标可以是真机或者模拟器，更多请参考MonkeyTalk官网、Android配置使用MonkeyTalk。
+Ant实现将Android工程转化成A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MonkeyTalk、Jenkins和Ant构建Android自动化测试">
+<meta property="og:url" content="http://yoursite.com/2014/01/11/MonkeyTalk、Jenkins和ant构建android自动化测试/index.html">
+<meta property="og:site_name" content="Jimmy's Blog">
+<meta property="og:description" content="最终效果一键实现Andriod app自动化测试：更新版本库最新代码、打包签名、安装、启动、运行测试脚本、发送测试报告
+涉及工具MonkeyTalk移动平台自动化测试工具，支持android、ios、phone web平台测试脚本的录制、编辑、回放，测试目标可以是真机或者模拟器，更多请参考MonkeyTalk官网、Android配置使用MonkeyTalk。
+Ant实现将Android工程转化成A">
+<meta property="og:image" content="http://yoursite.com/images/jenkins-setting.png">
+<meta property="og:image" content="http://yoursite.com/images/jenkins-new-project.png">
+<meta property="og:image" content="http://yoursite.com/images/jenkins-svn.png">
+<meta property="og:image" content="http://yoursite.com/images/jenkins-build.png">
+<meta property="og:image" content="http://yoursite.com/images/jenkins-report.png">
+<meta property="og:updated_time" content="2016-06-12T05:11:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MonkeyTalk、Jenkins和Ant构建Android自动化测试">
+<meta name="twitter:description" content="最终效果一键实现Andriod app自动化测试：更新版本库最新代码、打包签名、安装、启动、运行测试脚本、发送测试报告
+涉及工具MonkeyTalk移动平台自动化测试工具，支持android、ios、phone web平台测试脚本的录制、编辑、回放，测试目标可以是真机或者模拟器，更多请参考MonkeyTalk官网、Android配置使用MonkeyTalk。
+Ant实现将Android工程转化成A">
+<meta name="twitter:image" content="http://yoursite.com/images/jenkins-setting.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> MonkeyTalk、Jenkins和Ant构建Android自动化测试 | Jimmy's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jimmy's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MonkeyTalk、Jenkins和Ant构建Android自动化测试
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-11T17:23:09+08:00" content="2014-01-11">
+              2014-01-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Test/" itemprop="url" rel="index">
+                    <span itemprop="name">Test</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最终效果一键实现Andriod app自动化测试：更新版本库最新代码、打包签名、安装、启动、运行测试脚本、发送测试报告</p>
+<h1 id="涉及工具"><a href="#涉及工具" class="headerlink" title="涉及工具"></a>涉及工具</h1><h2 id="MonkeyTalk"><a href="#MonkeyTalk" class="headerlink" title="MonkeyTalk"></a>MonkeyTalk</h2><p>移动平台自动化测试工具，支持android、ios、phone web平台测试脚本的录制、编辑、回放，测试目标可以是真机或者模拟器，更多请参考<a href="https://www.cloudmonkeymobile.com/monkeytalk" target="_blank" rel="external">MonkeyTalk官网</a>、<a href="http://whutec.sinaapp.com/2013/10/android平台下配置使用monkeytalk/" target="_blank" rel="external">Android配置使用MonkeyTalk</a>。</p>
+<h2 id="Ant"><a href="#Ant" class="headerlink" title="Ant"></a>Ant</h2><p>实现将Android工程转化成AspectJProject。</p>
+<p>MonkeyTalk实现控制真机或者模拟器进行自动化测试，安装的android工程必须要添加monkeytalk-agent-1.0.58.jar(位于monkeytalk-&gt;agents-&gt;andriod)和将android工程转换成AspectJProject。</p>
+<p>ant复制monkeytalk-agent-1.0.58.jar到android工程libs目录下：</p>
+<pre><code>&lt;!-- copy monkeytalk-agent lib to project libs --&gt;
+&lt;target name=&quot;copy-monkeytalk-agent&quot; &gt;
+    &lt;copy todir=&quot;${basedir}/libs&quot; &gt;
+        &lt;fileset file=&quot;${mt.agent.dir}&quot; /&gt;
+    &lt;/copy&gt;
+&lt;/target&gt;
+</code></pre><p>ant将android工程转换成AspectJProject，需要下载<a href="http://eclipse.org/aspectj/" target="_blank" rel="external">AspectJ</a>。将AspectJ-&gt;libs-&gt;aspectjrt.jar复制到android工程libs目录下：</p>
+<pre><code>&lt;!-- copy aspectjrt lib to project libs --&gt;
+&lt;target name=&quot;copy-aspectjrt&quot; &gt;
+    &lt;copy todir=&quot;${basedir}/libs&quot; &gt;
+        &lt;fileset file=&quot;${aspectjrt.dir}&quot; /&gt;
+    &lt;/copy&gt;
+&lt;/target&gt;
+</code></pre><p>重写-post-compile任务，将android工程编译成AspectJ工程：</p>
+<pre><code>&lt;target name=&quot;-post-compile&quot; &gt;
+    &lt;property
+        name=&quot;classes.woven.dir&quot;
+        value=&quot;${out.classes.absolute.dir}/../classes-woven&quot; /&gt;
+
+    &lt;!-- setup aspectj ant tasks --&gt;
+    &lt;taskdef resource=&quot;org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties&quot; &gt;
+        &lt;classpath&gt;
+            &lt;pathelement location=&quot;${aspectj.dir}/lib/aspectjtools.jar&quot; /&gt;
+        &lt;/classpath&gt;
+    &lt;/taskdef&gt;
+
+    &lt;condition
+        property=&quot;android.jar&quot;
+        value=&quot;${project.target.android.jar}&quot; &gt;
+
+        &lt;isset property=&quot;project.target.android.jar&quot; /&gt;
+    &lt;/condition&gt;
+
+    &lt;fail
+        message=&quot;android.jar is missing. This must point to the target SDK&amp;apos;s android.jar.&quot;
+        unless=&quot;android.jar&quot; /&gt;
+
+    &lt;iajc
+        destDir=&quot;${classes.woven.dir}&quot;
+        showWeaveInfo=&quot;true&quot; &gt;
+
+        &lt;!-- 将monkeytalk-agent-1.0.58.jar加入aspectpath --&gt;
+        &lt;aspectpath&gt;
+            &lt;pathelement location=&quot;${basedir}/libs/monkeytalk-agent-1.0.58.jar&quot; /&gt;
+        &lt;/aspectpath&gt;
+
+        &lt;inpath&gt;
+            &lt;pathelement location=&quot;${out.classes.absolute.dir}&quot; /&gt;
+        &lt;/inpath&gt;
+
+        &lt;classpath&gt;
+            &lt;pathelement location=&quot;${out.classes.absolute.dir}&quot; /&gt;
+
+            &lt;pathelement location=&quot;${android.jar}&quot; /&gt;
+
+            &lt;fileset dir=&quot;${basedir}/libs&quot; &gt;
+                &lt;include name=&quot;**/*.jar&quot; /&gt;
+            &lt;/fileset&gt;
+
+            &lt;pathelement location=&quot;${basedir}/libs/android-support-v4.jar&quot; /&gt;
+            &lt;!-- 第三方lib工程 --&gt;
+            &lt;pathelement location=&quot;../androidKu-union_pay/bin/classes.jar&quot; /&gt;
+        &lt;/classpath&gt;
+    &lt;/iajc&gt;
+
+    &lt;!-- remove the old classes dir, and replace with new &quot;woven&quot; classes --&gt;
+    &lt;delete dir=&quot;${out.classes.absolute.dir}&quot; /&gt;
+
+    &lt;mkdir dir=&quot;${out.classes.absolute.dir}&quot; /&gt;
+
+    &lt;copy todir=&quot;${out.classes.absolute.dir}&quot; &gt;
+        &lt;fileset dir=&quot;${classes.woven.dir}&quot; /&gt;
+    &lt;/copy&gt;
+&lt;/target&gt;
+</code></pre><p>使用ant运行写好的测试脚本，首先将monkeyTalk-&gt;ant-&gt;monkeytalk-ant-1.0.58.jar复制到ant安装目录的lib中。运行测试脚本时要app对应的界面处于运行可见状态。ant脚本：</p>
+<pre><code>&lt;!-- mt-script.dir：MonkeyTalk测试工程路径--&gt;
+&lt;!--reports.dir：运行完成后生产的包括路径--&gt;
+&lt;target name=&quot;mtRun&quot; depends=&quot;clean-reports&quot;&gt;
+     &lt;monkeytalk:run agent=&quot;AndroidEmulator&quot;
+      adb=&quot;${sdk.dir}/platform-tools/adb.exe&quot;
+      script=&quot;${mt-script.dir}&quot;
+      reportdir=&quot;${reports.dir}&quot;
+      thinktime=&quot;2000&quot;
+      timeout=&quot;5000&quot;
+      verbose=&quot;true&quot; /&gt;
+&lt;/target&gt;
+</code></pre><p>同时配置多个设备请参考<a href="https://www.cloudmonkeymobile.com/monkeytalk-documentation/monkeytalk-user-guide/ant-runner" target="_blank" rel="external">MonkeyTalk ant-runner
+</a>。</p>
+<p>使用ant发送邮件，要用到mail对应的task库，如果ant-&gt;lib目录下不存在请先下载</p>
+<pre><code>&lt;!-- 发送邮件，添加reports.zip作为附件 --&gt;
+&lt;mail mailhost=&quot;${mail.host}&quot; mailport=&quot;${mail.port}&quot; user=&quot;${mail.user}&quot; password=&quot;${mail.password}&quot; subject=&quot;Android自动化脚本测试报告&quot;&gt;
+    &lt;from address=&quot;${mail.from}&quot;/&gt;
+    &lt;to address=&quot;${mail.to}&quot;/&gt;
+    &lt;message&gt;测试报告见附件&lt;/message&gt;
+    &lt;attachments&gt;
+        &lt;file name=&quot;${reports.zip.dir}&quot;/&gt;
+    &lt;/attachments&gt;
+&lt;/mail&gt;
+&lt;/target&gt;
+</code></pre><p>==注意==：ant中涉及到的文件请根据自己的路径进行配置</p>
+<h2 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h2><p>一个开源软件项目，旨在提供一个开放易用的软件平台，使持续集成变成可能(来自<a href="http://baike.baidu.com/view/6190216.htm?tp=0_11" target="_blank" rel="external">百度百科</a>)。更多请访问<a href="http://jenkins-ci.org/" target="_blank" rel="external">Jenkins官网</a><br>Jenkins的安装成功后，在浏览器中输入<a href="http://localhost:8080启动Jenkins界面，点击系统管理-&gt;系统设置" target="_blank" rel="external">http://localhost:8080启动Jenkins界面，点击系统管理-&gt;系统设置</a> 设置JDK/ANT的路径：</p>
+<p><img src="/images/jenkins-setting.png" alt=""></p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>有了上面的准备工作，就可以在Jenkins中新建项目进行自动化测试了。</p>
+<h2 id="新建Jenkins项目"><a href="#新建Jenkins项目" class="headerlink" title="新建Jenkins项目"></a>新建Jenkins项目</h2><p><img src="/images/jenkins-new-project.png" alt=""></p>
+<h2 id="源码管理"><a href="#源码管理" class="headerlink" title="源码管理"></a>源码管理</h2><p>配置android项目svn，提取项目最新代码。如果涉及到多个工程，需要配置多个：</p>
+<p><img src="/images/jenkins-svn.png" alt=""></p>
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><p>以下顺序不能改，任务运行时按顺序进行：</p>
+<ul>
+<li>ant进行打包</li>
+<li>使用批处理命令进行安装、启动应用。如果想同时在多个设备安装、运行，请参考               <a href="http://whutec.sinaapp.com/2013/11/adb命令同时操作多台设置/" target="_blank" rel="external">adb命令同时操作多台设备</a></li>
+<li>使用ant运行测试脚本、发送测试报告。</li>
+</ul>
+<p><img src="/images/jenkins-build.png" alt=""></p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>配置完成点击保存，回到Jenkins首页。进入AutoTest项目，点击左边的立即构建。<br>如果运行完成、控制台没有报错，那么恭喜你，android自动化测试构建成功，赶紧去邮箱查看测试报告吧。<br>报告以html展示，可以看到成功的测试用例、错误的测试用及其原因:</p>
+<p><img src="/images/jenkins-report.png" alt=""></p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>如果配置失败，或者遇到问题，欢迎留言讨论。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AutoTest/" rel="tag">#AutoTest</a>
+          
+            <a href="/tags/MonkeyTalk/" rel="tag">#MonkeyTalk</a>
+          
+            <a href="/tags/Ant/" rel="tag">#Ant</a>
+          
+            <a href="/tags/Jenkins/" rel="tag">#Jenkins</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/10/25/Android配置使用MonkeyTalk/" rel="next" title="Android配置使用MonkeyTalk">
+                <i class="fa fa-chevron-left"></i> Android配置使用MonkeyTalk
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/11/偶遇/" rel="prev" title="偶遇">
+                偶遇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="keshuangjie" />
+          <p class="site-author-name" itemprop="name">keshuangjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#涉及工具"><span class="nav-number">1.</span> <span class="nav-text">涉及工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MonkeyTalk"><span class="nav-number">1.1.</span> <span class="nav-text">MonkeyTalk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ant"><span class="nav-number">1.2.</span> <span class="nav-text">Ant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jenkins"><span class="nav-number">1.3.</span> <span class="nav-text">Jenkins</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#新建Jenkins项目"><span class="nav-number">2.1.</span> <span class="nav-text">新建Jenkins项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码管理"><span class="nav-number">2.2.</span> <span class="nav-text">源码管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建"><span class="nav-number">2.3.</span> <span class="nav-text">构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行"><span class="nav-number">2.4.</span> <span class="nav-text">运行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-number">3.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">keshuangjie</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
