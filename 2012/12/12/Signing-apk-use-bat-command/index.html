@@ -1,0 +1,652 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="adb,bat," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Apk签名命令创建key，需要用到keytool.exe (位于jdk1.6.0_24\jre\bin目录下)，使用产生的key对apk签名用到的是jarsigner.exe (位于jdk1.6.0_24\bin目录下)，把上面两个目录添加到环境变量path中。
+产生密钥库
+keytool -genkey -v -keystore g:\my-release-key.keystore -alias">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Signing apk use bat command">
+<meta property="og:url" content="http://yoursite.com/2012/12/12/Signing-apk-use-bat-command/index.html">
+<meta property="og:site_name" content="Jimmy's Blog">
+<meta property="og:description" content="Apk签名命令创建key，需要用到keytool.exe (位于jdk1.6.0_24\jre\bin目录下)，使用产生的key对apk签名用到的是jarsigner.exe (位于jdk1.6.0_24\bin目录下)，把上面两个目录添加到环境变量path中。
+产生密钥库
+keytool -genkey -v -keystore g:\my-release-key.keystore -alias">
+<meta property="og:updated_time" content="2016-06-16T06:14:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Signing apk use bat command">
+<meta name="twitter:description" content="Apk签名命令创建key，需要用到keytool.exe (位于jdk1.6.0_24\jre\bin目录下)，使用产生的key对apk签名用到的是jarsigner.exe (位于jdk1.6.0_24\bin目录下)，把上面两个目录添加到环境变量path中。
+产生密钥库
+keytool -genkey -v -keystore g:\my-release-key.keystore -alias">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Signing apk use bat command | Jimmy's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jimmy's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Signing apk use bat command
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-12-12T19:33:47+08:00" content="2012-12-12">
+              2012-12-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Apk签名命令"><a href="#Apk签名命令" class="headerlink" title="Apk签名命令"></a>Apk签名命令</h1><p>创建key，需要用到keytool.exe (位于jdk1.6.0_24\jre\bin目录下)，使用产生的key对apk签名用到的是jarsigner.exe (位于jdk1.6.0_24\bin目录下)，把上面两个目录添加到环境变量path中。</p>
+<p><strong>产生密钥库</strong></p>
+<pre><code>keytool -genkey -v -keystore g:\my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+</code></pre><p>参数说明：</p>
+<ul>
+<li>-genkey 产生密钥</li>
+<li>-keystore g:\demo.keystore 产生密钥库的存放路径</li>
+<li>-alias demo.keystore 别名 demo.keystore 要和密钥库名字相同</li>
+<li>-keyalg RSA 使用RSA算法对签名加密</li>
+<li>-keysize 2048  The size of each generated key (bits) 默认为1024</li>
+<li>-validity 10000有效期限10000天</li>
+</ul>
+<p><strong>签名</strong></p>
+<pre><code>jarsigner -verbose -keystore g:\my-release-key.keystore my_application.apk alias_name
+</code></pre><p>参数说明：</p>
+<ul>
+<li>-verbose 输出签名的详细信息</li>
+<li>-keystore  g:\demo.keystore 密钥库位置</li>
+<li>要签名的文件demo.apk</li>
+<li>别名 alias_name</li>
+</ul>
+<p><strong>Align the final APK package</strong></p>
+<p>The zipalign tool is provided with the Android SDK, inside the tools/ directory.</p>
+<pre><code>zipalign -v 4 g:\keyStore\sign_rss.apk g:\keyStore\align_sign_rss.apk
+</code></pre><p>参数说明：</p>
+<ul>
+<li>The -v flag turns on verbose output (optional)</li>
+<li>4 is the byte-alignment (don’t use anything other than 4)</li>
+<li>g:\keyStore\sign_rss.apk  为签名过得apk</li>
+<li>g:\keyStore\align_sign_rss.apk 为align过后的apk</li>
+</ul>
+<p><strong>验证签名是否成功</strong></p>
+<pre><code>jarsigner -verify -verbose -certs my_application.apk
+</code></pre><h1 id="使用bat简化签名流程"><a href="#使用bat简化签名流程" class="headerlink" title="使用bat简化签名流程"></a>使用bat简化签名流程</h1><p>用命令行为apk文件sign、zipalign需要两步，并且参数多、命令不好记。最好是一个简单的命令就能实现sign和zipalign功能，觉得批处理命令应该能实现。经过查找资料现学，最后用一句就能实现：</p>
+<pre><code>// sign：bat文件的命名
+// unsigned.apk：未签名的apk文件路径
+// signed.apk：签名后的apk文件路径
+sign unsigned.apk signed.apk
+</code></pre><p>sign.bat文件中的storepass、alias、keystore 的路径根据自己的需求更改，sign.bat代码如下：</p>
+<pre><code>@echo off
+::two parameter: unsigned apk file , the apk file after sign and zipalign(注释)
+if &quot;%1&quot;==&quot;&quot; echo the unsigned apk dir is null
+if &quot;%1&quot;==&quot;&quot; goto end
+if &quot;%2&quot;==&quot;&quot; echo the signed apk dir is null
+if &quot;%2&quot;==&quot;&quot; goto end
+if exist log.txt del log.txt
+::siging apk file
+jarsigner -verbose -sigalg MD5withRSA -digestalg SHA1 -keystore android.keystore -storepass storepass %1 alias&gt;log.txt
+::end if error take place
+if errorlevel 1 goto end
+::zipalign the signed app
+zipalign -v 4 %1 %2 &gt;&gt;log.txt
+if errorlevel 1 goto end
+::verify whether the apk file signed
+jarsigner -verify %2 &gt;&gt;log.txt
+:end
+</code></pre><p>批处理命令学习参考：<a href="http://www.jb51.net/article/7131.htm" target="_blank" rel="external">http://www.jb51.net/article/7131.htm</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/adb/" rel="tag">#adb</a>
+          
+            <a href="/tags/bat/" rel="tag">#bat</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/12/05/Android-Install-Sqlite3/" rel="next" title="Android Install Sqlite3">
+                <i class="fa fa-chevron-left"></i> Android Install Sqlite3
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/12/15/Calculate-the-size-of-a-java-object/" rel="prev" title="Calculate the size of a java object">
+                Calculate the size of a java object <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="keshuangjie" />
+          <p class="site-author-name" itemprop="name">keshuangjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Apk签名命令"><span class="nav-number">1.</span> <span class="nav-text">Apk签名命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用bat简化签名流程"><span class="nav-number">2.</span> <span class="nav-text">使用bat简化签名流程</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">keshuangjie</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

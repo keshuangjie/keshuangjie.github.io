@@ -1,0 +1,720 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ContentObserver,购物车," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="UI效果图如下：实现购物车功能的要点：
+
+购物车UI的布局
+购物车里面商品数量是保存在本地数据库sqlite，要保证UI上的数据与数据库同步
+
+先谈购物车UI的布局，购物车可以看成两部分购物车图标（ImageView）、购物车商品数量（TextView，红色椭圆圈可以当做TextView的背景）。这整个的布局可以封装成一个ShoppingCartView，ShoppingCarView继承Fram">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android app购物车功能实现">
+<meta property="og:url" content="http://yoursite.com/2013/03/21/Android-app购物车功能实现/index.html">
+<meta property="og:site_name" content="Jimmy's Blog">
+<meta property="og:description" content="UI效果图如下：实现购物车功能的要点：
+
+购物车UI的布局
+购物车里面商品数量是保存在本地数据库sqlite，要保证UI上的数据与数据库同步
+
+先谈购物车UI的布局，购物车可以看成两部分购物车图标（ImageView）、购物车商品数量（TextView，红色椭圆圈可以当做TextView的背景）。这整个的布局可以封装成一个ShoppingCartView，ShoppingCarView继承Fram">
+<meta property="og:image" content="http://yoursite.com/images/shoppingcart.png">
+<meta property="og:updated_time" content="2016-06-16T03:22:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android app购物车功能实现">
+<meta name="twitter:description" content="UI效果图如下：实现购物车功能的要点：
+
+购物车UI的布局
+购物车里面商品数量是保存在本地数据库sqlite，要保证UI上的数据与数据库同步
+
+先谈购物车UI的布局，购物车可以看成两部分购物车图标（ImageView）、购物车商品数量（TextView，红色椭圆圈可以当做TextView的背景）。这整个的布局可以封装成一个ShoppingCartView，ShoppingCarView继承Fram">
+<meta name="twitter:image" content="http://yoursite.com/images/shoppingcart.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android app购物车功能实现 | Jimmy's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Jimmy's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android app购物车功能实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-03-21T20:43:27+08:00" content="2013-03-21">
+              2013-03-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>UI效果图如下：<br><img src="/images/shoppingcart.png" alt=""><br>实现购物车功能的要点：</p>
+<ol>
+<li>购物车UI的布局</li>
+<li>购物车里面商品数量是保存在本地数据库sqlite，要保证UI上的数据与数据库同步</li>
+</ol>
+<p>先谈购物车UI的布局，购物车可以看成两部分购物车图标（ImageView）、购物车商品数量（TextView，红色椭圆圈可以当做TextView的背景）。这整个的布局可以封装成一个ShoppingCartView，ShoppingCarView继承FrameLayout。购物车的xml布局如下：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;ShoppingCartView
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:id=&quot;@+id/shopping_cart_view&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/imageview&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_gravity=&quot;center_vertical|center_horizontal&quot;
+        android:background=&quot;@drawable/icon_cart&quot;
+        android:duplicateParentState=&quot;true&quot; &gt;
+    &lt;/ImageView&gt;
+
+    &lt;LinearLayout
+        android:layout_width=&quot;fill_parent&quot;
+        android:layout_height=&quot;fill_parent&quot;
+        android:layout_gravity=&quot;center_vertical|center_horizontal&quot;
+        android:gravity=&quot;center&quot;
+        android:paddingBottom=&quot;@dimen/hSize22&quot;
+        android:paddingLeft=&quot;@dimen/wSize18&quot;&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/textview_carNum&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:paddingLeft=&quot;@dimen/wSize1&quot;
+            android:paddingBottom=&quot;@dimen/hSize1&quot;
+            android:background=&quot;@drawable/cart_num_bg&quot;
+            android:duplicateParentState=&quot;true&quot;
+            android:gravity=&quot;center&quot;
+            android:singleLine=&quot;true&quot;
+            android:textColor=&quot;#f9f6f3&quot;
+            android:textSize=&quot;@dimen/tSize12&quot;
+            android:textStyle=&quot;bold&quot;/&gt;    
+    &lt;/LinearLayout&gt;
+
+&lt;/ShoppingCartView&gt;
+</code></pre><p>这个UI难在将TextView布局在ImageView的右上方，实现原理是将LinearLayout的宽和高设为“fillParent”，由于rootView是FrameLayout，所以LinearLayout完全覆盖ImageView，再通过设置LinearLayout子布局与边框的距离，将子布局TextView设置在LineaLayout的右上，因此就达到了TextView在ImageView右上的效果。</p>
+<p>再讲谈第二点，UI上显示的商品数量与sqlite数据库保持一致、实时更新。</p>
+<p>这用到了ContentObserver——内容观察者，目的是观察(捕捉)特定Uri引起的数据库的变化，继而做一些相应的处理，它类似于 数据库技术中的触发器(Trigger)，当ContentObserver所观察的Uri发生变化时，便会触发它。</p>
+<p>实现原理在ShoppingCartView第一次初始化的时候注册ContentObserver。实现ContentObserver重写onChange方法，一旦数据库中购物车商品数量发生变化，就会触发onChange方法，onChange方法中实现将数据库中购物车表ui中更新。当初始化ShoppingCartView的Activity销毁时，取消ContextOberver注册。</p>
+<p>ShoppingCarView的完整封装代码：</p>
+<pre><code>public class ShoppingCartView extends FrameLayout {
+
+    private TextView cartNumber;
+    private Context context;
+
+    public ShoppingCartView(Context context){
+        super(context);
+        this.context = context;
+    }
+
+    public ShoppingCartView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+    }
+
+    public void initCartNumber(){
+        cartNumber = (TextView) this.findViewById(R.id.textview_carNum);
+        context.getContentResolver().registerContentObserver(DataProvider.CONTENT_URI_BOOKCART,
+        true, cob);
+        setCarNum();
+    }
+
+    private ContentObserver cob = new ContentObserver(new Handler()) {
+        @Override
+        public boolean deliverSelfNotifications() {
+            return super.deliverSelfNotifications();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            setCarNum();
+        }
+    };
+
+    private void setCarNum(){
+        int count = DBHelper.getCartBookNum();
+        cartNumber.setText(String.valueOf(count)+&quot;+&quot;);
+        if(count&gt;0){
+            cartNumber.setVisibility(View.VISIBLE);
+        }else{
+            cartNumber.setVisibility(View.GONE);
+        }
+    }
+
+    public void unRegisterContentObserver(){
+        context.getContentResolver().unregisterContentObserver(cob);
+    }
+}
+</code></pre><p>ShoppingCarView类使用，在Activity中初始化：</p>
+<pre><code>shoppingCartView = (ShoppingCartView) findViewById(R.id.shopping_cart_view);
+shoppingCartView.initCartNumber();
+
+shoppingCartView.setOnClickListener(new View.OnClickListener() {   
+   @Override
+    public void onClick(View v) {
+    //进入购物车页面
+    }
+});
+</code></pre><p>Activity销毁时，取消注册ContentObserver：</p>
+<pre><code>if(shoppingCartView!=null){
+     shoppingCartView.unRegisterContentObserver();
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ContentObserver/" rel="tag">#ContentObserver</a>
+          
+            <a href="/tags/购物车/" rel="tag">#购物车</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/01/18/Android-Install-busybox/" rel="next" title="Android Install busybox">
+                <i class="fa fa-chevron-left"></i> Android Install busybox
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/08/12/解决ScrollView、ListView、GridView内嵌问题/" rel="prev" title="解决ScrollView、ListView、GridView内嵌问题">
+                解决ScrollView、ListView、GridView内嵌问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="keshuangjie" />
+          <p class="site-author-name" itemprop="name">keshuangjie</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">keshuangjie</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
