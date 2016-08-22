@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ListView," />
+  <meta name="keywords" content="spark,环境搭建," />
 
 
 
@@ -84,22 +84,37 @@
 
 
 
-<meta name="description" content="实现ListView动态添加HeaderView，当HeaderView里面的内容为空时不显示。
-初始方案通常想到的做法是在加载数据完之后，判断HeaderView的内容是否为空，如果不为空 ，调用addHeaderView(View view)。但是这样会导致异常：
-IllegalStateException(&amp;quot;Cannot add header view to list -- set">
+<meta name="description" content="本文将介绍Spark的单机运行环境搭建，以及如何在IDE用scala语言开发Spark app，不涉及hdfs系统和hadoop。
+环境准备我使用的是MAC OS X EI Capitan 版本10.11.1，配置的开发环境如下：
+
+jdk1.8
+scala-2.11.8
+spark-1.6.2-bin-hadoop2.6
+
+jdk安装oracle网站下载指定版本并安装，安装完成配置环境变量：编辑">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hide HeaderView of ListView">
-<meta property="og:url" content="http://keshuangjie.github.io/2013/09/25/Hide-HeaderView-of-ListView/index.html">
+<meta property="og:title" content="Spark入门-环境搭建">
+<meta property="og:url" content="http://keshuangjie.github.io/2016/08/19/Spark入门-环境搭建/index.html">
 <meta property="og:site_name" content="Jimmy's Blog">
-<meta property="og:description" content="实现ListView动态添加HeaderView，当HeaderView里面的内容为空时不显示。
-初始方案通常想到的做法是在加载数据完之后，判断HeaderView的内容是否为空，如果不为空 ，调用addHeaderView(View view)。但是这样会导致异常：
-IllegalStateException(&amp;quot;Cannot add header view to list -- set">
-<meta property="og:updated_time" content="2016-06-16T05:25:45.000Z">
+<meta property="og:description" content="本文将介绍Spark的单机运行环境搭建，以及如何在IDE用scala语言开发Spark app，不涉及hdfs系统和hadoop。
+环境准备我使用的是MAC OS X EI Capitan 版本10.11.1，配置的开发环境如下：
+
+jdk1.8
+scala-2.11.8
+spark-1.6.2-bin-hadoop2.6
+
+jdk安装oracle网站下载指定版本并安装，安装完成配置环境变量：编辑">
+<meta property="og:updated_time" content="2016-08-22T12:38:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hide HeaderView of ListView">
-<meta name="twitter:description" content="实现ListView动态添加HeaderView，当HeaderView里面的内容为空时不显示。
-初始方案通常想到的做法是在加载数据完之后，判断HeaderView的内容是否为空，如果不为空 ，调用addHeaderView(View view)。但是这样会导致异常：
-IllegalStateException(&amp;quot;Cannot add header view to list -- set">
+<meta name="twitter:title" content="Spark入门-环境搭建">
+<meta name="twitter:description" content="本文将介绍Spark的单机运行环境搭建，以及如何在IDE用scala语言开发Spark app，不涉及hdfs系统和hadoop。
+环境准备我使用的是MAC OS X EI Capitan 版本10.11.1，配置的开发环境如下：
+
+jdk1.8
+scala-2.11.8
+spark-1.6.2-bin-hadoop2.6
+
+jdk安装oracle网站下载指定版本并安装，安装完成配置环境变量：编辑">
 
 
 
@@ -117,7 +132,7 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
   };
 </script>
 
-  <title> Hide HeaderView of ListView | Jimmy's Blog </title>
+  <title> Spark入门-环境搭建 | Jimmy's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -257,7 +272,7 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
             
             
               
-                Hide HeaderView of ListView
+                Spark入门-环境搭建
               
             
           </h1>
@@ -269,8 +284,8 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-25T14:01:34+08:00" content="2013-09-25">
-              2013-09-25
+            <time itemprop="dateCreated" datetime="2016-08-19T14:51:19+08:00" content="2016-08-19">
+              2016-08-19
             </time>
           </span>
 
@@ -283,8 +298,8 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
                   </a>
                 </span>
 
@@ -299,8 +314,8 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2013/09/25/Hide-HeaderView-of-ListView/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/25/Hide-HeaderView-of-ListView/" itemprop="commentsCount"></span>
+                <a href="/2016/08/19/Spark入门-环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/19/Spark入门-环境搭建/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -323,41 +338,60 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
       
 
       
-        <p>实现ListView动态添加HeaderView，当HeaderView里面的内容为空时不显示。</p>
-<p><strong>初始方案</strong><br>通常想到的做法是在加载数据完之后，判断HeaderView的内容是否为空，如果不为空 ，调用addHeaderView(View view)。但是这样会导致异常：</p>
-<pre><code>IllegalStateException(&quot;Cannot add header view to list -- setAdapter has already been called.&quot;);
-</code></pre><p>然后我查看addHeaderView源码：</p>
-<pre><code>if (mAdapter != null &amp;&amp; ! (mAdapter instanceof HeaderViewListAdapter)) {
-            throw new IllegalStateException(
-                    &quot;Cannot add header view to list -- setAdapter has already been called.&quot;);
-}
-</code></pre><p>如果ListView设置的adapter 不是HeaderViewListAdapter类的实例就会抛出异常，那么什么时候adapter才会是HeaderViewListAdapter的实例呢，再看下setAdapter方法源码：</p>
-<pre><code>if (mHeaderViewInfos.size() &gt; 0|| mFooterViewInfos.size() &gt; 0) {
-    mAdapter = new HeaderViewListAdapter(mHeaderViewInfos, mFooterViewInfos, adapter);
-} else {
-    mAdapter = adapter;
-}
-</code></pre><p>原来，在ListView setAdapter之前，如果添加了HeaderView或者FooterView，自定义的adapter就会被转换成HeaderViewListAdapter，如果没有HeaderView或者FooterView，adapter还是BaseAdapter实例。</p>
-<p>弄懂了原因之后，就可以换一种方案来实现文章开头的需求。在setAdapter之前可以先调用addHeaderView(View view)，然后调用setAdapter，这个时候adapter就被转换成了HeaderViewListAdapter实例。当加载数据完成之后，如果HeaderView内容为空，就调用removeHeaderView(View view)移除HeaderView，当HeaderView内容不再为空的时候，再调用addHeaderView（View view)，就不会报IllegalStateException异常了。</p>
-<p><strong>正确方案</strong><br>在setAdapter之前调用addHeaderView(View view)，当HeaderView内容为空时，设置HeaderView不可见setVisibility(View.GONE)，当HeaderView需要显示的时候设置为可见。</p>
-<p>当设置HederView不可见时，内容确实隐藏了，但是HeaderView显示相同高度的空白，隐藏HeaderView的效果并未达到。</p>
-<p>无法理解，通过google找到了解决方案，在HeaderView里面一层再包一层布局，设置里面的布局不可见，就达到了该要的效果。例如下面布局是HeaderView:</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    android:id=&quot;@+id/layout1&quot;
-    android:layout_width=&quot;fill_parent&quot;
-    android:layout_height=&quot;fill_parent&quot; &gt;
+        <p>本文将介绍Spark的单机运行环境搭建，以及如何在IDE用scala语言开发Spark app，不涉及hdfs系统和hadoop。</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>我使用的是MAC OS X EI Capitan 版本10.11.1，配置的开发环境如下：</p>
+<ul>
+<li>jdk1.8</li>
+<li>scala-2.11.8</li>
+<li>spark-1.6.2-bin-hadoop2.6</li>
+</ul>
+<h2 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h2><p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">oracle网站</a>下载指定版本并安装，安装完成配置环境变量：<br>编辑~/.bash_profile文件，在最后加上java环境变量：</p>
+<pre><code>export JAVA_HOME=/Users/jimmy/Documents/develop/java_1.8
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+</code></pre><p>保存并跟新：</p>
+<pre><code>$ source ~/.bash_profile
+</code></pre><p>验证java是否安装成功:</p>
+<pre><code>$ java -version
+</code></pre><p>如果显示如下java版本信息则安装配置成功：</p>
+<pre><code>java version &quot;1.8.0_91&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_91-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.91-b14, mixed mode)
+</code></pre><h2 id="scala安装"><a href="#scala安装" class="headerlink" title="scala安装"></a>scala安装</h2><p><a href="http://www.scala-lang.org/download/" target="_blank" rel="external">scala官网</a>下载scala-2.11.8.tgz并解压到相应的目录。编辑~/.bash_profile文件，在最后加上scala环境变量:</p>
+<pre><code>export SCALA_HOME=/Users/jimmy/Documents/develop/scala-2.11.8
+export PATH=$PATH:$SCALA_HOME/bin
+</code></pre><p>保存并更新：</p>
+<pre><code>$ source ~/.bash_profile
+</code></pre><p>验证scala安装、配置成功：</p>
+<pre><code>$ scala -version
+</code></pre><p>如果显示以下则安装、配置成功：</p>
+<pre><code>Scala code runner version 2.11.8 -- Copyright 2002-2016, LAMP/EPFL
+</code></pre><h2 id="spark安装"><a href="#spark安装" class="headerlink" title="spark安装"></a>spark安装</h2><p><a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">spark官网</a>下载spark-1.6.2-bin-hadoop2.6.tgz并解压到相应目录。<br>cd到spark根目录，vim conf/spark-env.sh，添加如下配置：</p>
+<pre><code>export SCALA_HOME=/Users/jimmy/Documents/develop/scala-2.11.8
+export JAVA_HOME=/Users/jimmy/Documents/develop/java_1.8
+export SPARK_MASTER_IP=localhost
+export SPARK_WORKER_MEMORY=1024m
+</code></pre><p>编辑~/.bash_profile文件，在最后加上spark环境变量：</p>
+<pre><code>export SPARK_HOME=/Users/jimmy/Documents/develop/spark-1.6.2-bin-hadoop2.6
+export PATH=$PATH:$SPARK_HOME/bin
+</code></pre><p>验证spark安装、配置成功：</p>
+<pre><code>$ spark-shell
+</code></pre><p>最终显示scala&gt;说明安装成功：</p>
+<pre><code>...
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  &apos;_/
+   /___/ .__/\_,_/_/ /_/\_\   version 1.6.2
+      /_/
 
-    &lt;LinearLayout
-        android:id=&quot;@+id/layout2&quot;
-        android:layout_width=&quot;fill_parent&quot;
-        android:layout_height=&quot;fill_parent&quot; &gt;
+Using Scala version 2.10.5 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_91)
+...
+16/08/22 20:34:12 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+SQL context available as sqlContext.
 
-    &lt;/LinearLayout&gt;
-&lt;/LinearLayout&gt;
-</code></pre><p>设置layout1不可见会出现同高度的空白部分，设置layout2不可见有效。</p>
-<p>具体参考<a href="http://pivotallabs.com/android-tidbits-6-22-2011-hiding-header-views/?tag=android" target="_blank" rel="external">http://pivotallabs.com/android-tidbits-6-22-2011-hiding-header-views/?tag=android</a></p>
-
+scala&gt; 
+</code></pre>
       
     </div>
 
@@ -378,7 +412,9 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
       
         <div class="post-tags">
           
-            <a href="/tags/ListView/" rel="tag">#ListView</a>
+            <a href="/tags/spark/" rel="tag">#spark</a>
+          
+            <a href="/tags/环境搭建/" rel="tag">#环境搭建</a>
           
         </div>
       
@@ -387,17 +423,13 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/08/12/解决ScrollView、ListView、GridView内嵌问题/" rel="next" title="解决ScrollView、ListView、GridView内嵌问题">
-                <i class="fa fa-chevron-left"></i> 解决ScrollView、ListView、GridView内嵌问题
+              <a href="/2016/06/11/Data-Binding-on-Android/" rel="next" title="Data Binding on Android">
+                <i class="fa fa-chevron-left"></i> Data Binding on Android
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2013/10/25/Android配置使用MonkeyTalk/" rel="prev" title="Android配置使用MonkeyTalk">
-                Android配置使用MonkeyTalk <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -426,8 +458,8 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2013/09/25/Hide-HeaderView-of-ListView/"
-           data-title="Hide HeaderView of ListView" data-url="http://keshuangjie.github.io/2013/09/25/Hide-HeaderView-of-ListView/">
+      <div class="ds-thread" data-thread-key="2016/08/19/Spark入门-环境搭建/"
+           data-title="Spark入门-环境搭建" data-url="http://keshuangjie.github.io/2016/08/19/Spark入门-环境搭建/">
       </div>
     
   </div>
@@ -518,7 +550,7 @@ IllegalStateException(&amp;quot;Cannot add header view to list -- set">
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jdk安装"><span class="nav-number">1.1.</span> <span class="nav-text">jdk安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scala安装"><span class="nav-number">1.2.</span> <span class="nav-text">scala安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark安装"><span class="nav-number">1.3.</span> <span class="nav-text">spark安装</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

@@ -253,6 +253,178 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/19/Spark入门-环境搭建/" itemprop="url">
+                  Spark入门-环境搭建
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-19T14:51:19+08:00" content="2016-08-19">
+              2016-08-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/19/Spark入门-环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/19/Spark入门-环境搭建/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文将介绍Spark的单机运行环境搭建，以及如何在IDE用scala语言开发Spark app，不涉及hdfs系统和hadoop。</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>我使用的是MAC OS X EI Capitan 版本10.11.1，配置的开发环境如下：</p>
+<ul>
+<li>jdk1.8</li>
+<li>scala-2.11.8</li>
+<li>spark-1.6.2-bin-hadoop2.6</li>
+</ul>
+<h2 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h2><p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">oracle网站</a>下载指定版本并安装，安装完成配置环境变量：<br>编辑~/.bash_profile文件，在最后加上java环境变量：</p>
+<pre><code>export JAVA_HOME=/Users/jimmy/Documents/develop/java_1.8
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+</code></pre><p>保存并跟新：</p>
+<pre><code>$ source ~/.bash_profile
+</code></pre><p>验证java是否安装成功:</p>
+<pre><code>$ java -version
+</code></pre><p>如果显示如下java版本信息则安装配置成功：</p>
+<pre><code>java version &quot;1.8.0_91&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_91-b14)
+Java HotSpot(TM) 64-Bit Server VM (build 25.91-b14, mixed mode)
+</code></pre><h2 id="scala安装"><a href="#scala安装" class="headerlink" title="scala安装"></a>scala安装</h2><p><a href="http://www.scala-lang.org/download/" target="_blank" rel="external">scala官网</a>下载scala-2.11.8.tgz并解压到相应的目录。编辑~/.bash_profile文件，在最后加上scala环境变量:</p>
+<pre><code>export SCALA_HOME=/Users/jimmy/Documents/develop/scala-2.11.8
+export PATH=$PATH:$SCALA_HOME/bin
+</code></pre><p>保存并更新：</p>
+<pre><code>$ source ~/.bash_profile
+</code></pre><p>验证scala安装、配置成功：</p>
+<pre><code>$ scala -version
+</code></pre><p>如果显示以下则安装、配置成功：</p>
+<pre><code>Scala code runner version 2.11.8 -- Copyright 2002-2016, LAMP/EPFL
+</code></pre><h2 id="spark安装"><a href="#spark安装" class="headerlink" title="spark安装"></a>spark安装</h2><p><a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">spark官网</a>下载spark-1.6.2-bin-hadoop2.6.tgz并解压到相应目录。<br>cd到spark根目录，vim conf/spark-env.sh，添加如下配置：</p>
+<pre><code>export SCALA_HOME=/Users/jimmy/Documents/develop/scala-2.11.8
+export JAVA_HOME=/Users/jimmy/Documents/develop/java_1.8
+export SPARK_MASTER_IP=localhost
+export SPARK_WORKER_MEMORY=1024m
+</code></pre><p>编辑~/.bash_profile文件，在最后加上spark环境变量：</p>
+<pre><code>export SPARK_HOME=/Users/jimmy/Documents/develop/spark-1.6.2-bin-hadoop2.6
+export PATH=$PATH:$SPARK_HOME/bin
+</code></pre><p>验证spark安装、配置成功：</p>
+<pre><code>$ spark-shell
+</code></pre><p>最终显示scala&gt;说明安装成功：</p>
+<pre><code>...
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  &apos;_/
+   /___/ .__/\_,_/_/ /_/\_\   version 1.6.2
+      /_/
+
+Using Scala version 2.10.5 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_91)
+...
+16/08/22 20:34:12 WARN ObjectStore: Failed to get database default, returning NoSuchObjectException
+SQL context available as sqlContext.
+
+scala&gt; 
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/11/Data-Binding-on-Android/" itemprop="url">
                   Data Binding on Android
                 </a>
@@ -842,127 +1014,6 @@ protected void onCreate(Bundle savedInstanceState) {
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/05/03/Android-sticky-tabBar/" itemprop="url">
-                  Android sticky tabBar
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-05-03T21:47:37+08:00" content="2014-05-03">
-              2014-05-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/05/03/Android-sticky-tabBar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/03/Android-sticky-tabBar/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>StickyMenu 是一个滑动时TabBar随ListView进行滑动到一定距离时固定在顶端，并且当tab之间切换时保持TabBar的位置不变的控件demo。<br>其中的MyListView支持下拉刷新、上滑加载更多（MyListView改进于XListView）。<br>效果图如下：<br><img src="/images/listview-sticky-tabar.gif" alt=""></p>
-<p>源代码见<a href="https://github.com/keshuangjie/stickyMenu" target="_blank" rel="external">github</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1008,7 +1059,7 @@ protected void onCreate(Bundle savedInstanceState) {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1016,7 +1067,7 @@ protected void onCreate(Bundle savedInstanceState) {
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1025,7 +1076,7 @@ protected void onCreate(Bundle savedInstanceState) {
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

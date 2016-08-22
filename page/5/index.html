@@ -253,6 +253,275 @@
             
               
                 
+                <a class="post-title-link" href="/2012/10/14/计算Android项目代码行数/" itemprop="url">
+                  计算Android项目代码行数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-10-14T16:53:57+08:00" content="2012-10-14">
+              2012-10-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/10/14/计算Android项目代码行数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/10/14/计算Android项目代码行数/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>只能计算android项目中的java和XML文件，代码实现如下：</p>
+<pre><code>public class CodeCount {
+
+   private static int count = 0;
+
+    /**
+     * 遍历文件
+     * @param path
+     */
+    private static void listFile(String path){
+        File file = new File(path);
+        if(!file.exists()){
+            System.err.println(file.getAbsolutePath() + &quot;路径不存在&quot;);
+        }
+        if(file.isDirectory()){
+            File[] files = file.listFiles();
+            for(File f:files){
+                listFile(f.getAbsolutePath());
+            }
+        }else{
+            countLine(file);
+        }
+    }
+
+    private static void countLine(File file){
+        if(file.exists()){
+            if(file.getName().endsWith(&quot;.java&quot;)){
+                countLine4Java(file);
+            }else if(file.getName().endsWith(&quot;.xml&quot;)){
+                countLine4Xml(file);
+            }
+        }
+    }
+
+    /**
+     * 计算项目中java文件代码数量
+     * @param file
+     */
+    private static void countLine4Java(File file){
+        if(!file.exists() || !file.getName().endsWith(&quot;.java&quot;)){
+            return;
+        }
+        BufferedReader in = null;
+        String str = null;
+        try {
+            in = new BufferedReader(new FileReader(file));
+            while((str=in.readLine()) != null){
+                //去掉tab空隔
+                str = str.replaceAll(&quot;\t&quot;, &quot;&quot;);
+                //去除行首空格
+                str = removeSpace(str);
+                //排除空行
+                if(str.equals(&quot;&quot;)){
+                    continue;
+                }
+                //排除单行注释
+                if(str.startsWith(&quot;//&quot;)){
+                    continue;
+                }
+                //排除多行注释
+                if(str.startsWith(&quot;/*&quot;) || str.startsWith(&quot;*&quot;)){
+                    continue;
+                }
+                count++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                if(in != null){
+                    in.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 计算项目xml文件代码数量
+     * @param file
+     */
+    private static void countLine4Xml(File file){
+        if(!file.exists() || !file.getName().endsWith(&quot;.xml&quot;)){
+            return;
+        }
+        boolean flag = true;
+        BufferedReader in = null;
+        String str = null;
+        try {
+            in = new BufferedReader(new FileReader(file));
+            while((str=in.readLine()) != null){
+                //去掉tab空隔
+                str = str.replaceAll(&quot;\t&quot;, &quot;&quot;);
+                //去除空格
+                str = removeSpace(str);
+                //排除空行
+                if(str.equals(&quot;&quot;)){
+                    continue;
+                }
+                //排除注释
+                if(str.startsWith(&quot;&lt;!--&quot;)){
+                    flag = false;
+                }
+                if(flag){
+                    count++;
+                }
+                if(str.startsWith(&quot;--&gt;&quot;) || str.endsWith(&quot;--&gt;&quot;)){
+                    flag = true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                if(in != null){
+                    in.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //移除字符串的开始空格
+    public static String removeSpace(String s){
+        String str = s;
+        if(str.equals(&quot;&quot;) || str == null){
+            return &quot;&quot;;
+        }
+        if(!str.startsWith(&quot; &quot;)){
+            return str;
+        }
+        str = str.replaceFirst(&quot; &quot;, &quot;&quot;);
+        return removeSpace(str);
+    }
+
+    public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
+        listFile(&quot;D:\\workSpace&quot;);
+        long endTime = System.currentTimeMillis();
+        System.out.println(&quot;代码总行数：&quot; + count);
+        System.out.println(&quot;程序运行时间：&quot; + (endTime-startTime));
+    }
+
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/09/28/Fuck-My-Futrue/" itemprop="url">
                   Fuck My Futrue
                 </a>
@@ -404,7 +673,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -412,7 +681,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -421,7 +690,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
