@@ -254,7 +254,7 @@
               
                 
                 <a class="post-title-link" href="/2016/08/19/Spark入门-环境搭建/" itemprop="url">
-                  Spark入门-环境搭建
+                  Spark入门-本地应用环境构建
                 </a>
               
             
@@ -376,6 +376,93 @@ Using Scala version 2.10.5 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_91)
 SQL context available as sqlContext.
 
 scala&gt; 
+</code></pre><p>在scala&gt;后面可以直接运行scala语句，也可以使用spark环境和相关API，sc是已初始化的SparkContext对象。</p>
+<h1 id="Spark项目构建"><a href="#Spark项目构建" class="headerlink" title="Spark项目构建"></a>Spark项目构建</h1><h3 id="SBT"><a href="#SBT" class="headerlink" title="SBT"></a>SBT</h3><p><a href="http://www.scala-sbt.org" target="_blank" rel="external">Sbt</a>是scala官网推荐的项目构建工具，类似与maven是java语言的主流构建工具，ant/gradle是Android主流的构建工具一样。<br>sbt安装很简单，直接下载解压，sbt的目录很简单，只包含两个文件:</p>
+<pre><code>sbt
+sbt-launch.jar
+</code></pre><p>配置环境变量就可以直接在命令行里运行sbt，sbt首次运行会下载一些依赖包（由于网络环境问题，可能需要配置代理）。依赖包下载完成之后，就会进入到了stb的交互式操作控制台。</p>
+<h3 id="Scala-ide"><a href="#Scala-ide" class="headerlink" title="Scala-ide"></a>Scala-ide</h3><p><a href="http://scala-ide.org/download/sdk.html" target="_blank" rel="external">Scala-ide</a>是scala官网推荐的集成了scala开发插件的eclipse。由于目前eclipse中并没有集成sbt的工具插件，所以不能在eclipse中直接new scala工程，而是需要通过sbt生成工程目录结构然后导入eclipse中。</p>
+<h2 id="构建Eclipse工程"><a href="#构建Eclipse工程" class="headerlink" title="构建Eclipse工程"></a>构建Eclipse工程</h2><p>想要sbt生成eclipse工程需要先配置sbt-eclipse插件，可以使用全局和单个工程的配置方式。<br><strong>全局配置方式</strong><br>在sbt首次使用的时候会在~/用户目录下生成.sbt目录，.sbt目录下有一个0.13/plugins的空文件夹，在下面新建build.sbt文件，添加配置如下：</p>
+<pre><code>addSbtPlugin(&quot;com.typesafe.sbteclipse&quot; % &quot;sbteclipse-plugin&quot; % &quot;2.4.0&quot;)
+</code></pre><p><strong>单个工程配置</strong><br>单个工程配置是在每个工程的根目录*.sbt文件添加如上配置。</p>
+<p>配置完sbt-eclipse配置，在工程目录下执行下面命令就可生成eclipse工程目录结构。</p>
+<pre><code>$ sbt eclipse
+</code></pre><p>将工程导入到eclipse，目录结构如下：<br><img src="/images/spark_project_dir.png" alt=""></p>
+<h2 id="Eclipse中配置运行"><a href="#Eclipse中配置运行" class="headerlink" title="Eclipse中配置运行"></a>Eclipse中配置运行</h2><h3 id="scala程序运行"><a href="#scala程序运行" class="headerlink" title="scala程序运行"></a>scala程序运行</h3><p>运行scala程序非常简单，在src/main/scala下新建scala object “HelloScala.scala”</p>
+<pre><code>object HelloScala {
+
+  def main(args: Array[String]) {
+    println(&quot;Hello, scala&quot;)
+  }
+
+}
+</code></pre><p>右键–Run As–Scala Application，在控制台将打印”Hello, scala”。</p>
+<h3 id="Spark程序运行"><a href="#Spark程序运行" class="headerlink" title="Spark程序运行"></a>Spark程序运行</h3><p>运行Spark程序需要依赖spark core库，手动添加如下（也可以通过sbt添加依赖库的方式自动添加，下面会介绍）：</p>
+<ol>
+<li>在工程目录下新建lib文件夹，copy $SPARK_HOME/lib/spark-assembly-1.6.2-hadoop2.6.0.jar到工程lib文件夹下</li>
+<li>在eclipse中将jar添加到工程Build Path。</li>
+</ol>
+<p>新建scala objec HelloSpark.scala，羡慕程序中的”data/input”是文本文件，HelloSpark用于读取文件并计算包含”北京”字符串的行数：</p>
+<pre><code>import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+
+object HelloSpark {
+  val logFile = &quot;data/input&quot;
+  def main(args:Array[String]) {
+    var cityName = &quot;&quot;
+    if (args.length &lt; 1) cityName = &quot;北京&quot; else cityName = args(0)
+
+    val conf = new SparkConf().setAppName(&quot;Spark Exercise: Spark Version Word Count Program&quot;);
+    val sc = new SparkContext(conf);
+    val textFile = sc.textFile(logFile);
+
+    val city = (x: String) =&gt; x == &quot;北京&quot;;
+    val beijingRdd  = textFile.filter(line =&gt; line.contains(cityName));
+    println(&quot;contain beijing line count: &quot; + beijingRdd.count);
+  }
+}
+</code></pre><p>由于没有配置master URL，直接运行HelloSpark会报错：</p>
+<pre><code>Using Spark&apos;s default log4j profile: org/apache/spark/log4j-defaults.properties
+16/08/23 11:44:57 INFO SparkContext: Running Spark version 1.6.2
+16/08/23 11:44:57 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+16/08/23 11:44:57 ERROR SparkContext: Error initializing SparkContext.
+org.apache.spark.SparkException: A master URL must be set in your configuration
+    at org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:401)
+    at HelloSpark$.main(HelloSpark.scala:11)
+    at HelloSpark.main(HelloSpark.scala)
+16/08/23 11:44:57 INFO SparkContext: Successfully stopped SparkContext
+Exception in thread &quot;main&quot; org.apache.spark.SparkException: A master URL must be set in your configuration
+    at org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:401)
+at HelloSpark$.main(HelloSpark.scala:11)
+at HelloSpark.main(HelloSpark.scala)
+</code></pre><p>解决方案是在HelloSpark右键–Run As–Run Configurations…–Arguments–VM Arguments 框中配置：</p>
+<pre><code>-Dspark.master=local
+</code></pre><p>再点击运行可以在控制台上看到先初始化spark环境，然后进行计算打印计算结果：</p>
+<pre><code>contain beijing line count: 2
+</code></pre><h2 id="SBT编译打包"><a href="#SBT编译打包" class="headerlink" title="SBT编译打包"></a>SBT编译打包</h2><p>使用sbt对上述helloscala工程进行编译打包管理，在helloscala根目录下新建build.sbt文件，配置如下：</p>
+<pre><code>name := &quot;helloscala&quot;  
+
+version := &quot;1.0&quot;  
+
+scalaVersion := &quot;2.10.5&quot;  
+
+EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource  
+
+libraryDependencies += &quot;org.apache.spark&quot; %% &quot;spark-core&quot; % &quot;1.6.2&quot;
+</code></pre><p>注意：</p>
+<ul>
+<li>每行配置需要空一行</li>
+<li>每次当build.sbt中相关配置变化后，都需要执行sbt eclipse命令来更新使其生效   </li>
+</ul>
+<p>libraryDependencies是添加项目依赖库，helloscala工程需要依赖spark环境。运行sbt相关命令时会先下载依赖库。<br>EclipseKeys.createSrc如果配置了，执行sbt eclipse命令时会生成Source Folder目录src/main/resources。</p>
+<p>编译</p>
+<pre><code>$ sbt compile
+</code></pre><p>打包，打包完成会在targe/scala-2.10/下生成helloscala_2.10-1.0.jar。</p>
+<pre><code>$ sbt package
+</code></pre><h2 id="Spark-submit"><a href="#Spark-submit" class="headerlink" title="Spark-submit"></a>Spark-submit</h2><p>sbt打包的jar可以使用spark-submit命令提交到集群（此文中是本地集群）中进行计算，命令如下：</p>
+<pre><code>spark-submit  --class  HelloSpark target/scala-2.10/helloscala_2.10-1.0.jar 
+</code></pre><p>如果用HelloSpark统计包含”上海”的行数，需要传入参数：</p>
+<pre><code>spark-submit  --class  HelloSpark target/scala-2.10/helloscala_2.10-1.0.jar &quot;上海&quot;
 </code></pre>
           
         
@@ -1076,7 +1163,7 @@ protected void onCreate(Bundle savedInstanceState) {
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
